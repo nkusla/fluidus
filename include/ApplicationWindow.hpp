@@ -11,6 +11,7 @@
 #include <iostream>
 #include <memory>
 #include "Renderer.hpp"
+#include "Config.hpp"
 
 class ApplicationWindow {
 	private:

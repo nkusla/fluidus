@@ -107,12 +107,19 @@ void ApplicationWindow::displayAllWidgets() {
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("##Control", nullptr, ImGuiWindowFlags_NoMove);
+	ImGui::Begin("Controls", nullptr, ImGuiWindowFlags_NoMove);
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 200, 0));
 	ImGui::SetWindowSize(ImVec2(200, 370));
 
-	ImGui::Text("Hello, world!");
-	// Widgets go here ...
+	ImGui::Text("Container dimensions");
+	ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
+	ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
+	ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, 1.0f, 3.0f);
+
+	// This should be with some kind of observer pattern
+	renderer->getContainer()->updateDimensions(Config::CONTAINER_DIMENSIONS);
+
+	ImGui::Text("Fluid properties");
 
 	ImGui::End();
 	ImGui::Render();
