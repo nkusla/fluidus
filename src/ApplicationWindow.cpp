@@ -2,6 +2,7 @@
 
 ApplicationWindow::ApplicationWindow(int width, int height)
 	: screenSize(width, height) {
+
 	if(!glfwInit()) {
 		std::cout << "Failed to initialize GLFW!" << std::endl;
 		return;
@@ -54,8 +55,6 @@ ApplicationWindow::ApplicationWindow(int width, int height)
 		glm::vec3(0.0f, 0.0f, 0.0f),	// Camera target
 		glm::vec3(0.0f, 1.0f, 0.0f)		// Up vector
 	);
-
-	container = Container(2.0f, 1.0f, 1.0f);
 }
 
 void ApplicationWindow::InitImGui() {
@@ -74,20 +73,24 @@ void ApplicationWindow::InitImGui() {
 	}
 }
 
-GLFWwindow* ApplicationWindow::getWindow() { return window; }
-
-bool ApplicationWindow::checkClose() {
-	return (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
-		&& glfwWindowShouldClose(window) == 0);
-}
-
-void ApplicationWindow::close() {
+ApplicationWindow::~ApplicationWindow() {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
+}
+
+void ApplicationWindow::setContent(std::shared_ptr<Container> container) {
+	this->container = container;
+}
+
+GLFWwindow* ApplicationWindow::getWindow() { return window; }
+
+bool ApplicationWindow::checkClose() {
+	return (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
+		&& glfwWindowShouldClose(window) == 0);
 }
 
 void ApplicationWindow::checKeyPressed() {
@@ -118,7 +121,7 @@ void ApplicationWindow::runFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	displayAllWidgets();
 
-	container.render(view, projection);
+	container->render(view, projection);
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();

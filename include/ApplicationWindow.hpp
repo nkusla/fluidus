@@ -11,6 +11,7 @@
 #include "../imgui/imgui_impl_opengl3.h"
 
 #include <iostream>
+#include <memory>
 #include "Container.hpp"
 
 class ApplicationWindow {
@@ -21,16 +22,18 @@ class ApplicationWindow {
 		glm::mat4 projection;
 		glm::mat4 view;
 
-		Container container;
+		std::shared_ptr<Container> container = nullptr;
 
 		void InitImGui();
 
 	public:
 		ApplicationWindow(int width, int height);
+		~ApplicationWindow();
+
 		GLFWwindow* getWindow();
+		void setContent(std::shared_ptr<Container> container);
 
 		bool checkClose();
-		void close();
 		void checKeyPressed();
 		void displayAllWidgets();
 		void runFrame();

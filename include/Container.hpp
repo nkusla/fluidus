@@ -17,7 +17,6 @@ class Container {
 
 		glm::mat4 model;
 	public:
-		Container();
 		Container(float width, float height, float depth);
 		~Container();
 

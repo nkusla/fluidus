@@ -1,9 +1,5 @@
 #include "../include/Container.hpp"
 
-Container::Container()
-	: width(0.0f), height(0.0f), depth(0.0f),
-	VAO(0), VBO(0), EBO(0), shaderProgram(0) {}
-
 Container::Container(float width, float height, float depth)
 	: width(width), height(height), depth(depth) {
 
@@ -58,10 +54,10 @@ Container::Container(float width, float height, float depth)
 }
 
 Container::~Container() {
-	// glDeleteVertexArrays(1, &VAO);
-	// glDeleteBuffers(1, &VBO);
-	// glDeleteBuffers(1, &EBO);
-	// glDeleteProgram(shaderProgram);
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteProgram(shaderProgram);
 }
 
 float Container::getWidth() const { return width; }
