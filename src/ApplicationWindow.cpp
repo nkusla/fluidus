@@ -1,6 +1,7 @@
 #include "../include/ApplicationWindow.hpp"
 
-ApplicationWindow::ApplicationWindow(int width, int height) {
+ApplicationWindow::ApplicationWindow(int width, int height)
+	: screenSize(width, height) {
 	if(!glfwInit()) {
 		std::cout << "Failed to initialize GLFW!" << std::endl;
 		return;
@@ -19,7 +20,6 @@ ApplicationWindow::ApplicationWindow(int width, int height) {
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
   glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
-	screenSize = {width, height};
 	window = glfwCreateWindow(width, height, "Fluidus", NULL, NULL);
 
 	if(window == NULL) {
@@ -38,7 +38,24 @@ ApplicationWindow::ApplicationWindow(int width, int height) {
 		return;
   }
 
+	glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	InitImGui();
+
+	projection = glm::perspective(
+		glm::radians(45.0f), 						// Field of view
+		(float)width / (float)height,		// Aspect ratio
+		0.1f,														// Near clipping plane
+		200.0f);												// Far clipping plane
+
+	view = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, 3.0f),	// Camera position
+		glm::vec3(0.0f, 0.0f, 0.0f),	// Camera target
+		glm::vec3(0.0f, 1.0f, 0.0f)		// Up vector
+	);
+
+	container = Container(1.0f, 1.0f, 1.0f);
 }
 
 void ApplicationWindow::InitImGui() {
@@ -65,9 +82,9 @@ bool ApplicationWindow::checkClose() {
 }
 
 void ApplicationWindow::close() {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+	// ImGui_ImplOpenGL3_Shutdown();
+	// ImGui_ImplGlfw_Shutdown();
+	// ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
@@ -97,8 +114,11 @@ void ApplicationWindow::displayAllWidgets() {
 }
 
 void ApplicationWindow::runFrame() {
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	displayAllWidgets();
 
+	container.render(view, projection);
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
