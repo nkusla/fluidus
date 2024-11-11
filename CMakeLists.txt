@@ -33,4 +33,3 @@ find_package(GLEW REQUIRED)
 link_libraries(glm::glm glfw OpenGL::GL GLEW::GLEW)
 
 add_executable(fluidus "main.cpp" ${SOURCES} ${IMGUI})
-add_executable(ogl "ogl.cpp" ${SOURCES} ${IMGUI})

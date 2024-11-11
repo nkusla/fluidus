@@ -55,7 +55,7 @@ ApplicationWindow::ApplicationWindow(int width, int height)
 		glm::vec3(0.0f, 1.0f, 0.0f)		// Up vector
 	);
 
-	container = Container(1.0f, 1.0f, 1.0f);
+	container = Container(2.0f, 1.0f, 1.0f);
 }
 
 void ApplicationWindow::InitImGui() {
@@ -82,9 +82,9 @@ bool ApplicationWindow::checkClose() {
 }
 
 void ApplicationWindow::close() {
-	// ImGui_ImplOpenGL3_Shutdown();
-	// ImGui_ImplGlfw_Shutdown();
-	// ImGui::DestroyContext();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
 	glfwTerminate();

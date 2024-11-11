@@ -10,15 +10,15 @@ Container::Container(float width, float height, float depth)
 	model = glm::mat4(1.0f);
 
 	float vertices[] = {
-			// positions          // colors
-			-0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 0.5f,   // Red with 50% alpha
-			0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 0.5f,   // Green with 50% alpha
-			0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, 0.5f,   // Blue with 50% alpha
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.5f,   // Yellow with 50% alpha
-			-0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.5f,   // Magenta with 50% alpha
-			0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, 0.5f,   // Cyan with 50% alpha
-			0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 0.5f,   // White with 50% alpha
-			-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.5f    // Black with 50% alpha
+			// positions                          // colors
+			-width / 2, -height / 2, -depth / 2,  1.0f, 0.0f, 0.0f, 0.5f,   // Red with 50% alpha
+			width / 2, -height / 2, -depth / 2,  0.0f, 1.0f, 0.0f, 0.5f,   // Green with 50% alpha
+			width / 2,  height / 2, -depth / 2,  0.0f, 0.0f, 1.0f, 0.5f,   // Blue with 50% alpha
+			-width / 2,  height / 2, -depth / 2,  1.0f, 1.0f, 0.0f, 0.5f,   // Yellow with 50% alpha
+			-width / 2, -height / 2,  depth / 2,  1.0f, 0.0f, 1.0f, 0.5f,   // Magenta with 50% alpha
+			width / 2, -height / 2,  depth / 2,  0.0f, 1.0f, 1.0f, 0.5f,   // Cyan with 50% alpha
+			width / 2,  height / 2,  depth / 2,  1.0f, 1.0f, 1.0f, 0.5f,   // White with 50% alpha
+			-width / 2,  height / 2,  depth / 2,  0.0f, 0.0f, 0.0f, 0.5f    // Black with 50% alpha
 	};
 
 	// Indices for cube faces
@@ -58,10 +58,10 @@ Container::Container(float width, float height, float depth)
 }
 
 Container::~Container() {
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
-	glDeleteProgram(shaderProgram);
+	// glDeleteVertexArrays(1, &VAO);
+	// glDeleteBuffers(1, &VBO);
+	// glDeleteBuffers(1, &EBO);
+	// glDeleteProgram(shaderProgram);
 }
 
 float Container::getWidth() const { return width; }
@@ -71,13 +71,13 @@ float Container::getDepth() const { return depth; }
 void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
 
-	GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
 	GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
 	GLuint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
+	GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
 
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
