@@ -43,18 +43,6 @@ ApplicationWindow::ApplicationWindow(int width, int height)
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	InitImGui();
-
-	projection = glm::perspective(
-		glm::radians(45.0f), 						// Field of view
-		(float)width / (float)height,		// Aspect ratio
-		0.1f,														// Near clipping plane
-		200.0f);												// Far clipping plane
-
-	view = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, 3.0f),	// Camera position
-		glm::vec3(0.0f, 0.0f, 0.0f),	// Camera target
-		glm::vec3(0.0f, 1.0f, 0.0f)		// Up vector
-	);
 }
 
 void ApplicationWindow::InitImGui() {
@@ -82,8 +70,8 @@ ApplicationWindow::~ApplicationWindow() {
 	glfwTerminate();
 }
 
-void ApplicationWindow::setContent(std::shared_ptr<Container> container) {
-	this->container = container;
+void ApplicationWindow::setRenderer(std::shared_ptr<Renderer> renderer) {
+	this->renderer = renderer;
 }
 
 GLFWwindow* ApplicationWindow::getWindow() { return window; }
@@ -94,8 +82,17 @@ bool ApplicationWindow::checkClose() {
 }
 
 void ApplicationWindow::checKeyPressed() {
+	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		renderer->rotateVerticalCamera(0.1f);
+	}
 	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		std::cout << "Arrow down pressed" << std::endl;
+		renderer->rotateVerticalCamera(-0.1f);
+	}
+	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		renderer->rotateHorizontalCamera(-0.1f);
+	}
+	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		renderer->rotateHorizontalCamera(0.1f);
 	}
 }
 
@@ -121,7 +118,7 @@ void ApplicationWindow::runFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	displayAllWidgets();
 
-	container->render(view, projection);
+	renderer->render();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();

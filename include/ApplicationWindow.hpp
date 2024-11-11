@@ -3,8 +3,6 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
@@ -12,17 +10,14 @@
 
 #include <iostream>
 #include <memory>
-#include "Container.hpp"
+#include "Renderer.hpp"
 
 class ApplicationWindow {
 	private:
 		GLFWwindow* window;
 		glm::vec2 screenSize;
 
-		glm::mat4 projection;
-		glm::mat4 view;
-
-		std::shared_ptr<Container> container = nullptr;
+		std::shared_ptr<Renderer> renderer = nullptr;
 
 		void InitImGui();
 
@@ -31,7 +26,7 @@ class ApplicationWindow {
 		~ApplicationWindow();
 
 		GLFWwindow* getWindow();
-		void setContent(std::shared_ptr<Container> container);
+		void setRenderer(std::shared_ptr<Renderer> renderer);
 
 		bool checkClose();
 		void checKeyPressed();
