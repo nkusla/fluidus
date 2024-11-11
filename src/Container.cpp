@@ -5,27 +5,34 @@ Container::Container(float width, float height, float depth)
 
 	model = glm::mat4(1.0f);
 
-	float vertices[] = {
-			// positions                          // colors
-			-width / 2, -height / 2, -depth / 2,  1.0f, 0.0f, 0.0f, 0.5f,   // Red with 50% alpha
-			width / 2, -height / 2, -depth / 2,  0.0f, 1.0f, 0.0f, 0.5f,   // Green with 50% alpha
-			width / 2,  height / 2, -depth / 2,  0.0f, 0.0f, 1.0f, 0.5f,   // Blue with 50% alpha
-			-width / 2,  height / 2, -depth / 2,  1.0f, 1.0f, 0.0f, 0.5f,   // Yellow with 50% alpha
-			-width / 2, -height / 2,  depth / 2,  1.0f, 0.0f, 1.0f, 0.5f,   // Magenta with 50% alpha
-			width / 2, -height / 2,  depth / 2,  0.0f, 1.0f, 1.0f, 0.5f,   // Cyan with 50% alpha
-			width / 2,  height / 2,  depth / 2,  1.0f, 1.0f, 1.0f, 0.5f,   // White with 50% alpha
-			-width / 2,  height / 2,  depth / 2,  0.0f, 0.0f, 0.0f, 0.5f    // Black with 50% alpha
-	};
+		float vertices[] = {
+			// Front face
+			-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			 width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			 width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
 
-	// Indices for cube faces
-	unsigned int indices[] = {
-			0, 1, 2, 2, 3, 0,   // Front face
-			4, 5, 6, 6, 7, 4,   // Back face
-			4, 5, 1, 1, 0, 4,   // Bottom face
-			7, 6, 2, 2, 3, 7,   // Top face
-			4, 7, 3, 3, 0, 4,   // Left face
-			5, 6, 2, 2, 1, 5    // Right face
-	};
+			// Back face
+			-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			 width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			 width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f  // White with 50% alpha
+		};
+
+    unsigned int indices[] = {
+        // Front face
+        0, 1, 2, 2, 3, 0,
+        // Back face
+        4, 5, 6, 6, 7, 4,
+        // Left face
+        4, 0, 3, 3, 7, 4,
+        // Right face
+        1, 5, 6, 6, 2, 1,
+        // Top face
+        3, 2, 6, 6, 7, 3,
+        // Bottom face
+        4, 5, 1, 1, 0, 4
+    };
 
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
@@ -66,6 +73,7 @@ float Container::getDepth() const { return depth; }
 
 void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
 	GLuint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
@@ -78,4 +86,6 @@ void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
