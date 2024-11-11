@@ -82,17 +82,24 @@ bool ApplicationWindow::checkClose() {
 }
 
 void ApplicationWindow::checKeyPressed() {
+	glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
+	float rotationAngle = 0.2f;
+
+	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+		renderer->initCamera();
+	}
 	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		renderer->rotateVerticalCamera(0.1f);
+		renderer->rotateCamera(rotationAngle, xAxis);
 	}
 	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		renderer->rotateVerticalCamera(-0.1f);
+		renderer->rotateCamera(-rotationAngle, xAxis);
 	}
 	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		renderer->rotateHorizontalCamera(-0.1f);
+		renderer->rotateCamera(-rotationAngle, yAxis);
 	}
 	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		renderer->rotateHorizontalCamera(0.1f);
+		renderer->rotateCamera(rotationAngle, yAxis);
 	}
 }
 

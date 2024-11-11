@@ -21,8 +21,8 @@ class Renderer {
 		void render();
 
 		void setContainer(std::shared_ptr<Container> container);
-		void rotateVerticalCamera(float angleOffset);
-		void rotateHorizontalCamera(float angleOffset);
+		void rotateCamera(float angleOffset, glm::vec3 axis);
+		void initCamera();
 };
 
 #endif
