@@ -1,13 +1,14 @@
 #include "include/ApplicationWindow.hpp"
 #include "include/Container.hpp"
+#include "include/Config.hpp"
 
 int main() {
-	ApplicationWindow appWindow(1366, 768);
-	float aspectRatio = 1366.0f / 768.0f;
+	ApplicationWindow appWindow(Config::SCREEN_SIZE);
+	float aspectRatio = Config::SCREEN_SIZE.x / Config::SCREEN_SIZE.y;
 	auto renderer = std::make_shared<Renderer>(aspectRatio);
 	appWindow.setRenderer(renderer);
 
-	auto container = std::make_shared<Container>(2.0f, 1.0f, 1.0f);
+	auto container = std::make_shared<Container>(Config::CONTAINER_DIMENSIONS);
 	renderer->setContainer(container);
 
 	while(appWindow.checkClose()) {

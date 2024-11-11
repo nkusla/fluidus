@@ -22,7 +22,7 @@ class ApplicationWindow {
 		void InitImGui();
 
 	public:
-		ApplicationWindow(int width, int height);
+		ApplicationWindow(glm::vec2 screenSize);
 		~ApplicationWindow();
 
 		GLFWwindow* getWindow();

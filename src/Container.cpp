@@ -1,38 +1,39 @@
 #include "../include/Container.hpp"
 
-Container::Container(float width, float height, float depth)
-	: width(width), height(height), depth(depth) {
-
+Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
+	float width = dimensions.x;
+	float height = dimensions.y;
+	float depth = dimensions.z;
 	model = glm::mat4(1.0f);
 
-		float vertices[] = {
-			// Front face
-			-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			 width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			 width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+	float vertices[] = {
+		// Front face
+		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
 
-			// Back face
-			-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			 width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			 width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f  // White with 50% alpha
-		};
+		// Back face
+		-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+		-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f  // White with 50% alpha
+	};
 
-    unsigned int indices[] = {
-        // Front face
-        0, 1, 2, 2, 3, 0,
-        // Back face
-        4, 5, 6, 6, 7, 4,
-        // Left face
-        4, 0, 3, 3, 7, 4,
-        // Right face
-        1, 5, 6, 6, 2, 1,
-        // Top face
-        3, 2, 6, 6, 7, 3,
-        // Bottom face
-        4, 5, 1, 1, 0, 4
-    };
+	unsigned int indices[] = {
+		// Front face
+		0, 1, 2, 2, 3, 0,
+		// Back face
+		4, 5, 6, 6, 7, 4,
+		// Left face
+		4, 0, 3, 3, 7, 4,
+		// Right face
+		1, 5, 6, 6, 2, 1,
+		// Top face
+		3, 2, 6, 6, 7, 3,
+		// Bottom face
+		4, 5, 1, 1, 0, 4
+	};
 
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
@@ -41,7 +42,7 @@ Container::Container(float width, float height, float depth)
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -67,9 +68,34 @@ Container::~Container() {
 	glDeleteProgram(shaderProgram);
 }
 
-float Container::getWidth() const { return width; }
-float Container::getHeight() const { return height; }
-float Container::getDepth() const { return depth; }
+glm::vec3 Container::getDimensions() const {
+	return dimensions;
+}
+
+void Container::updateDimensions(glm::vec3 newDimensions) {
+	dimensions = newDimensions;
+	float width = dimensions.x;
+	float height = dimensions.y;
+	float depth = dimensions.z;
+
+	float vertices[] = {
+		// Front face
+		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+
+		// Back face
+		-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+			width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+		-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f  // White with 50% alpha
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 
 void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);

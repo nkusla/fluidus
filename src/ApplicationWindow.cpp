@@ -1,7 +1,6 @@
 #include "../include/ApplicationWindow.hpp"
 
-ApplicationWindow::ApplicationWindow(int width, int height)
-	: screenSize(width, height) {
+ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSize) {
 
 	if(!glfwInit()) {
 		std::cout << "Failed to initialize GLFW!" << std::endl;
@@ -21,7 +20,7 @@ ApplicationWindow::ApplicationWindow(int width, int height)
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
   glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
-	window = glfwCreateWindow(width, height, "Fluidus", NULL, NULL);
+	window = glfwCreateWindow(screenSize.x, screenSize.y, "Fluidus", NULL, NULL);
 
 	if(window == NULL) {
 		std::cerr << "Failed to open GLFW window" << std::endl;

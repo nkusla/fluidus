@@ -11,18 +11,17 @@
 
 class Container {
 	private:
-		float width, height, depth;
+		glm::vec3 dimensions;
 		GLuint VAO, VBO, EBO;
 		GLuint shaderProgram;
 
 		glm::mat4 model;
 	public:
-		Container(float width, float height, float depth);
+		Container(glm::vec3 dimensions);
 		~Container();
 
-		float getWidth() const;
-		float getHeight() const;
-		float getDepth() const;
+		void updateDimensions(glm::vec3 newDimensions);
+		glm::vec3 getDimensions() const;
 
 		void render(const glm::mat4 &view, const glm::mat4 &projection);
 };
