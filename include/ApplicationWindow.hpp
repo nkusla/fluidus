@@ -15,8 +15,11 @@
 
 class ApplicationWindow {
 	private:
-		GLFWwindow* window;
+		GLFWwindow* window = nullptr;
 		glm::vec2 screenSize;
+		double lastFrameTime = 0.0;
+		int frameCount = 0;
+		float fps = 0.0f;
 
 		std::shared_ptr<Renderer> renderer = nullptr;
 
@@ -32,6 +35,7 @@ class ApplicationWindow {
 		void checKeyPressed();
 		void displayAllWidgets();
 		void runFrame();
+		void updateFPS();
 
 		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 };

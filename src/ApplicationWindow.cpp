@@ -91,7 +91,7 @@ bool ApplicationWindow::checkClose() {
 void ApplicationWindow::checKeyPressed() {
 	glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
-	float rotationAngle = 0.2f;
+	float rotationAngle = Config::ROTATION_ANGLE;
 
 	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
 		renderer->initCamera();
@@ -116,8 +116,8 @@ void ApplicationWindow::displayAllWidgets() {
 	ImGui::NewFrame();
 
 	ImGui::Begin("Controls", nullptr, ImGuiWindowFlags_NoMove);
-	ImGui::SetWindowPos(ImVec2(screenSize.x - 200, 0));
-	ImGui::SetWindowSize(ImVec2(200, 370));
+	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, 0));
+	ImGui::SetWindowSize(ImVec2(250, 380));
 
 	ImGui::Text("Container dimensions");
 	ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
@@ -127,7 +127,8 @@ void ApplicationWindow::displayAllWidgets() {
 	// This should be with some kind of observer pattern
 	renderer->getContainer()->updateDimensions(Config::CONTAINER_DIMENSIONS);
 
-	ImGui::Text("Fluid properties");
+	ImGui::Spacing();
+	ImGui::Text("FPS: %.2f", fps);
 
 	ImGui::End();
 	ImGui::Render();
@@ -135,6 +136,8 @@ void ApplicationWindow::displayAllWidgets() {
 }
 
 void ApplicationWindow::runFrame() {
+	updateFPS();
+
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	displayAllWidgets();
@@ -144,3 +147,14 @@ void ApplicationWindow::runFrame() {
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 };
+
+void ApplicationWindow::updateFPS() {
+	double currentTime = glfwGetTime();
+	frameCount++;
+
+	if(currentTime - lastFrameTime >= 1.0) {
+		fps = frameCount / (currentTime - lastFrameTime);
+		frameCount = 0;
+		lastFrameTime = currentTime;
+	}
+}
