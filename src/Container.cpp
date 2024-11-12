@@ -17,10 +17,10 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 		0, 4, 7, 7, 3, 0,
 		// Right face
 		1, 5, 6, 6, 2, 1,
-		// Bottom face
-		0, 1, 5, 5, 4, 0,
 		// Top face
-		3, 2, 6, 6, 7, 3
+		3, 2, 6, 6, 7, 3,
+		// Bottom face
+		0, 1, 5, 5, 4, 0
 	};
 
 	glGenBuffers(1, &VBO);
@@ -63,16 +63,16 @@ void Container::defineVerticies() {
 
 	vertices = {
 		// Front face
-		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-			width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-			width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		-width / 2, -height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		width / 2, -height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		width / 2,  height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		-width / 2,  height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
 
 		// Back face
-		-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-			width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-			width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f
+		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f
 	};
 }
 
@@ -102,7 +102,7 @@ void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
