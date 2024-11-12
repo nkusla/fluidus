@@ -2,6 +2,7 @@
 #define CONTAINER_HPP
 
 #include <iostream>
+#include <array>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -16,6 +17,10 @@ class Container {
 		GLuint shaderProgram;
 
 		glm::mat4 model;
+		std::array<float, 56> vertices;
+		std::array<unsigned int, 36> indices;
+
+		void defineVerticies();
 	public:
 		Container(glm::vec3 dimensions);
 		~Container();

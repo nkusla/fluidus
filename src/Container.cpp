@@ -6,33 +6,21 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	float depth = dimensions.z;
 	model = glm::mat4(1.0f);
 
-	float vertices[] = {
-		// Front face
-		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
+	defineVerticies();
 
-		// Back face
-		-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-		-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f  // White with 50% alpha
-	};
-
-	unsigned int indices[] = {
+	indices = {
 		// Front face
 		0, 1, 2, 2, 3, 0,
 		// Back face
 		4, 5, 6, 6, 7, 4,
 		// Left face
-		4, 0, 3, 3, 7, 4,
+		0, 4, 7, 7, 3, 0,
 		// Right face
 		1, 5, 6, 6, 2, 1,
-		// Top face
-		3, 2, 6, 6, 7, 3,
 		// Bottom face
-		4, 5, 1, 1, 0, 4
+		0, 1, 5, 5, 4, 0,
+		// Top face
+		3, 2, 6, 6, 7, 3
 	};
 
 	glGenBuffers(1, &VBO);
@@ -42,10 +30,10 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_DYNAMIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -68,32 +56,36 @@ Container::~Container() {
 	glDeleteProgram(shaderProgram);
 }
 
+void Container::defineVerticies() {
+	float width = dimensions.x;
+	float height = dimensions.y;
+	float depth = dimensions.z;
+
+	vertices = {
+		// Front face
+		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+			width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+			width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+
+		// Back face
+		-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+			width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+			width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f
+	};
+}
+
 glm::vec3 Container::getDimensions() const {
 	return dimensions;
 }
 
 void Container::updateDimensions(glm::vec3 newDimensions) {
 	dimensions = newDimensions;
-	float width = dimensions.x;
-	float height = dimensions.y;
-	float depth = dimensions.z;
-
-	float vertices[] = {
-		// Front face
-		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-
-		// Back face
-		-width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2, -height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-			width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f, // White with 50% alpha
-		-width / 2,  height / 2,  depth / 2, 1.0f, 1.0f, 1.0f, 0.5f  // White with 50% alpha
-	};
+	defineVerticies();
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
