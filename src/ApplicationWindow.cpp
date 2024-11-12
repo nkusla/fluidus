@@ -42,6 +42,9 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	InitImGui();
+
+	glfwSetScrollCallback(window, ScrollCallback);
+	glfwSetWindowUserPointer(window, static_cast<void*>(this));
 }
 
 void ApplicationWindow::InitImGui() {
@@ -74,6 +77,11 @@ void ApplicationWindow::setRenderer(std::shared_ptr<Renderer> renderer) {
 }
 
 GLFWwindow* ApplicationWindow::getWindow() { return window; }
+
+void ApplicationWindow::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	ApplicationWindow* appWindow = static_cast<ApplicationWindow*>(glfwGetWindowUserPointer(window));
+	appWindow->renderer->zoomCamera(yoffset * Config::ZOOM_FACTOR);
+}
 
 bool ApplicationWindow::checkClose() {
 	return (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS

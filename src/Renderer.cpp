@@ -34,6 +34,11 @@ void Renderer::rotateCamera(float angleOffset, glm::vec3 axis) {
     view = translationBack * rotation * translationToOrigin * view;
 }
 
+void Renderer::zoomCamera(float zoomOffset) {
+		glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, zoomOffset));
+		view = translation * view;
+}
+
 void Renderer::render() {
 	container->render(view, projection);
 }

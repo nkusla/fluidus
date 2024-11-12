@@ -23,6 +23,7 @@ class Renderer {
 		void setContainer(std::shared_ptr<Container> container);
 		std::shared_ptr<Container> getContainer() const;
 		void rotateCamera(float angleOffset, glm::vec3 axis);
+		void zoomCamera(float zoomOffset);
 		void initCamera();
 };
 

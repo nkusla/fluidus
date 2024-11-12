@@ -21,7 +21,6 @@ class ApplicationWindow {
 		std::shared_ptr<Renderer> renderer = nullptr;
 
 		void InitImGui();
-
 	public:
 		ApplicationWindow(glm::vec2 screenSize);
 		~ApplicationWindow();
@@ -33,6 +32,8 @@ class ApplicationWindow {
 		void checKeyPressed();
 		void displayAllWidgets();
 		void runFrame();
+
+		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 };
 
 #endif
