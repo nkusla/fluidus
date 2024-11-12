@@ -29,7 +29,6 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
 	}
 
 	glfwMakeContextCurrent(window);
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "Failed to initialize GLEW" << std::endl;
@@ -43,6 +42,7 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
 
 	InitImGui();
 
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 	glfwSetScrollCallback(window, ScrollCallback);
 	glfwSetWindowUserPointer(window, static_cast<void*>(this));
 }
@@ -89,24 +89,26 @@ bool ApplicationWindow::checkClose() {
 }
 
 void ApplicationWindow::checKeyPressed() {
-	glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
-	float rotationAngle = Config::ROTATION_ANGLE;
+	double currentTime = glfwGetTime();
+	double deltaTime = currentTime - lastKeyPressTime;
+	lastKeyPressTime = currentTime;
+
+	float rotationAngle = Config::ROTATION_ANGLE * deltaTime;
 
 	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
 		renderer->initCamera();
 	}
 	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		renderer->rotateCamera(rotationAngle, xAxis);
+		renderer->rotateCamera(rotationAngle, X_AXIS);
 	}
 	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		renderer->rotateCamera(-rotationAngle, xAxis);
+		renderer->rotateCamera(-rotationAngle, X_AXIS);
 	}
 	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		renderer->rotateCamera(-rotationAngle, yAxis);
+		renderer->rotateCamera(-rotationAngle, Y_AXIS);
 	}
 	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		renderer->rotateCamera(rotationAngle, yAxis);
+		renderer->rotateCamera(rotationAngle, Y_AXIS);
 	}
 }
 
@@ -152,9 +154,9 @@ void ApplicationWindow::updateFPS() {
 	double currentTime = glfwGetTime();
 	frameCount++;
 
-	if(currentTime - lastFrameTime >= 1.0) {
-		fps = frameCount / (currentTime - lastFrameTime);
+	if(currentTime - lastFPSTime >= 1.0) {
+		fps = frameCount / (currentTime - lastFPSTime);
 		frameCount = 0;
-		lastFrameTime = currentTime;
+		lastFPSTime = currentTime;
 	}
 }

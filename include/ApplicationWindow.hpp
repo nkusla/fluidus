@@ -17,7 +17,8 @@ class ApplicationWindow {
 	private:
 		GLFWwindow* window = nullptr;
 		glm::vec2 screenSize;
-		double lastFrameTime = 0.0;
+		double lastKeyPressTime = 0.0;
+		double lastFPSTime = 0.0;
 		int frameCount = 0;
 		float fps = 0.0f;
 
@@ -37,6 +38,7 @@ class ApplicationWindow {
 		void runFrame();
 		void updateFPS();
 
+		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 };
 
