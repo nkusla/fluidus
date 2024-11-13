@@ -94,6 +94,11 @@ void ApplicationWindow::checKeyPressed() {
 	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
 		renderer->initCamera();
 	}
+
+	if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+		renderer->fluid->generateRandParticles(Config::PARTICLE_COUNT);
+	}
+
 	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		renderer->rotateCamera(rotationAngle, X_AXIS);
 	}

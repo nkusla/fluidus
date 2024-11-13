@@ -1,7 +1,9 @@
 #include "../include/Fluid.hpp"
 
 Fluid::Fluid() {
-	generateRandParticles(1000);
+	particles = std::make_shared<std::vector<Particle>>(Config::PARTICLE_COUNT);
+
+	generateRandParticles(Config::PARTICLE_COUNT);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -41,7 +43,7 @@ std::shared_ptr<std::vector<Particle>> Fluid::getParticles() {
 }
 
 void Fluid::generateRandParticles(int count) {
-	particles = std::make_shared<std::vector<Particle>>(count);
+	particles->resize(count);
 
 	std::random_device rd;
 	std::mt19937 gen(rd());

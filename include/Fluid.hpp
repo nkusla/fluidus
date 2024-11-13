@@ -4,6 +4,7 @@
 #include "Particle.hpp"
 #include "IObject.hpp"
 #include "ShaderLoader.hpp"
+#include "Config.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -15,9 +16,9 @@ class Fluid : public IObject {
 	private:
 		std::shared_ptr<std::vector<Particle>> particles = nullptr;
 
-		void generateRandParticles(int count);
 	public:
 		Fluid();
+		void generateRandParticles(int count);
 		std::shared_ptr<std::vector<Particle>> getParticles();
 		void render(const glm::mat4 &view, const glm::mat4 &projection) override;
 		void updateVBO() override;

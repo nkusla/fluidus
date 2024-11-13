@@ -6,3 +6,4 @@ float Config::ZOOM_FACTOR = 0.5f;
 float Config::ROTATION_ANGLE = 90.0f;
 float Config::G = 1e-5f;
 float Config::STEP = 0.01f;
+int Config::PARTICLE_COUNT = 1000;

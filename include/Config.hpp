@@ -17,6 +17,7 @@ class Config {
 		static float ROTATION_ANGLE;
 		static float G;
 		static float STEP;
+		static int PARTICLE_COUNT;
 };
 
 #endif
