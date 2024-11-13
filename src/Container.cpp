@@ -43,8 +43,8 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	glBindVertexArray(0);
 
 	shaderProgram = ShaderLoader::loadShaders(
-		"../glsl/vertex_shader.glsl",
-		"../glsl/fragment_shader.glsl"
+		"../glsl/container.vert.glsl",
+		"../glsl/container.frag.glsl"
 	);
 }
 

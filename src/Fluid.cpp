@@ -1,18 +1,7 @@
 #include "../include/Fluid.hpp"
 
 Fluid::Fluid() {
-	particles = std::make_shared<std::vector<Particle>>(100);
-
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(-0.5f, 0.5f);
-
-	for (auto &particle : *particles) {
-		particle.position = glm::vec3(dis(gen), dis(gen), dis(gen));
-		particle.velocity = glm::vec3(0.0f);
-		particle.acceleration = glm::vec3(0.0f);
-		particle.mass = 1.0;
-	}
+	generateParticles(1000);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -47,6 +36,21 @@ Fluid::Fluid() {
 	);
 }
 
+void Fluid::generateParticles(int count) {
+	particles = std::make_shared<std::vector<Particle>>(count);
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(-0.5f, 0.5f);
+
+	for (auto &particle : *particles) {
+		particle.position = glm::vec3(dis(gen), dis(gen), dis(gen));
+		particle.velocity = glm::vec3(0.0f);
+		particle.acceleration = glm::vec3(0.0f);
+		particle.mass = 1.0;
+	}
+}
+
 void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
 
@@ -59,6 +63,7 @@ void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 	glBindVertexArray(VAO);
+	glPointSize(5.0f);
 	glDrawArrays(GL_POINTS, 0, particles->size());
 	glBindVertexArray(0);
 

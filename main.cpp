@@ -6,8 +6,10 @@ int main() {
 	ApplicationWindow appWindow(Config::SCREEN_SIZE);
 	float aspectRatio = Config::SCREEN_SIZE.x / Config::SCREEN_SIZE.y;
 
-	appWindow.renderer = std::make_shared<Renderer>(aspectRatio);
-	appWindow.renderer->container = std::make_shared<Container>(Config::CONTAINER_DIMENSIONS);
+	auto renderer = std::make_shared<Renderer>(aspectRatio);
+	renderer->container = std::make_shared<Container>(Config::CONTAINER_DIMENSIONS);
+	renderer->fluid = std::make_shared<Fluid>();
+	appWindow.renderer = renderer;
 
 	while(appWindow.checkClose()) {
 		appWindow.checKeyPressed();

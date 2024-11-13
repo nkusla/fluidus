@@ -13,9 +13,9 @@
 
 class Fluid : public IObject {
 	private:
-
+		void generateParticles(int count);
 	public:
-		std::shared_ptr<std::vector<Particle>> particles;
+		std::shared_ptr<std::vector<Particle>> particles = nullptr;
 
 		Fluid();
 
