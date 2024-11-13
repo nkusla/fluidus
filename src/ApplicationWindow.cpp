@@ -122,6 +122,7 @@ void ApplicationWindow::displayAllWidgets() {
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, 0));
 	ImGui::SetWindowSize(ImVec2(250, 380));
 
+	ImGui::Spacing();
 	ImGui::Text("Container dimensions");
 	bool widthChanged = ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
 	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
@@ -130,7 +131,12 @@ void ApplicationWindow::displayAllWidgets() {
 	if(widthChanged || heightChanged || depthChanged)
 		renderer->container->updateDimensions(Config::CONTAINER_DIMENSIONS);
 
-	ImGui::Spacing();
+	ImGui::Spacing(); ImGui::Spacing();
+	ImGui::Text("Physics parameters");
+	ImGui::SliderFloat("Gravity", &variables.G, 1.0f, 100.0f);
+	Config::G = variables.G * variables.G_SCALE;
+
+	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("FPS: %.2f", fps);
 
 	ImGui::End();

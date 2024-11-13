@@ -14,6 +14,11 @@
 #include "Config.hpp"
 #include "Simulator.hpp"
 
+struct MenuVariables {
+	float G = 1.0f;
+	float G_SCALE = 1e-5;
+};
+
 class ApplicationWindow {
 	private:
 		GLFWwindow* window = nullptr;
@@ -22,6 +27,7 @@ class ApplicationWindow {
 		double lastFPSTime = 0.0;
 		int frameCount = 0;
 		float fps = 0.0f;
+		MenuVariables variables;
 
 		void InitImGui();
 	public:
