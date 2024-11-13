@@ -8,6 +8,7 @@ Renderer::Renderer(float aspectRatio) {
 		200.0f);												// Far clipping plane
 
 	initCamera();
+	fluid = std::make_shared<Fluid>();
 }
 
 void Renderer::initCamera() {
@@ -33,4 +34,5 @@ void Renderer::zoomCamera(float zoomOffset) {
 
 void Renderer::render() {
 	container->render(view, projection);
+	fluid->render(view, projection);
 }

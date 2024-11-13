@@ -10,6 +10,7 @@ class IObject {
 		GLuint VBO = 0;
 		GLuint EBO = 0;
 		GLuint shaderProgram = 0;
+		glm::mat4 model = glm::mat4(1.0f);
 
 	public:
 		virtual void render(const glm::mat4 &view, const glm::mat4 &projection) = 0;

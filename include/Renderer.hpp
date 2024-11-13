@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Container.hpp"
+#include "Fluid.hpp"
 
 class Renderer {
 	private:
@@ -15,6 +16,7 @@ class Renderer {
 
 	public:
 		std::shared_ptr<Container> container = nullptr;
+		std::shared_ptr<Fluid> fluid = nullptr;
 
 		Renderer(float aspectRatio);
 		void render();

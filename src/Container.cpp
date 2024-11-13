@@ -4,7 +4,6 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	float width = dimensions.x;
 	float height = dimensions.y;
 	float depth = dimensions.z;
-	model = glm::mat4(1.0f);
 
 	defineVerticies();
 
@@ -47,13 +46,6 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 		"../glsl/vertex_shader.glsl",
 		"../glsl/fragment_shader.glsl"
 	);
-}
-
-Container::~Container() {
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
-	glDeleteProgram(shaderProgram);
 }
 
 void Container::defineVerticies() {
@@ -106,4 +98,5 @@ void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glBindVertexArray(0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glUseProgram(0);
 }

@@ -15,14 +15,13 @@ class Container : public IObject {
 	private:
 		glm::vec3 dimensions;
 
-		glm::mat4 model;
 		std::array<float, 56> vertices;
 		std::array<unsigned int, 36> indices;
 
 		void defineVerticies();
 	public:
 		Container(glm::vec3 dimensions);
-		~Container();
+		~Container() = default;
 
 		void updateDimensions(glm::vec3 newDimensions);
 		glm::vec3 getDimensions() const;
