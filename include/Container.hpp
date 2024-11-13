@@ -9,12 +9,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "ShaderLoader.hpp"
+#include "IObject.hpp"
 
-class Container {
+class Container : public IObject {
 	private:
 		glm::vec3 dimensions;
-		GLuint VAO, VBO, EBO;
-		GLuint shaderProgram;
 
 		glm::mat4 model;
 		std::array<float, 56> vertices;
@@ -28,7 +27,7 @@ class Container {
 		void updateDimensions(glm::vec3 newDimensions);
 		glm::vec3 getDimensions() const;
 
-		void render(const glm::mat4 &view, const glm::mat4 &projection);
+		void render(const glm::mat4 &view, const glm::mat4 &projection) override;
 };
 
 #endif
