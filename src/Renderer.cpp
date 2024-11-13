@@ -10,14 +10,6 @@ Renderer::Renderer(float aspectRatio) {
 	initCamera();
 }
 
-void Renderer::setContainer(std::shared_ptr<Container> container) {
-	this->container = container;
-}
-
-std::shared_ptr<Container> Renderer::getContainer() const {
-	return container;
-}
-
 void Renderer::initCamera() {
 	view = glm::lookAt(
 		glm::vec3(0.0f, 0.0f, 3.0f),	// Camera position (eye)

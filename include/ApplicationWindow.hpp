@@ -22,15 +22,14 @@ class ApplicationWindow {
 		int frameCount = 0;
 		float fps = 0.0f;
 
-		std::shared_ptr<Renderer> renderer = nullptr;
-
 		void InitImGui();
 	public:
+		std::shared_ptr<Renderer> renderer = nullptr;
+
 		ApplicationWindow(glm::vec2 screenSize);
 		~ApplicationWindow();
 
 		GLFWwindow* getWindow();
-		void setRenderer(std::shared_ptr<Renderer> renderer);
 
 		bool checkClose();
 		void checKeyPressed();

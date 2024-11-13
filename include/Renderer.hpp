@@ -12,16 +12,13 @@ class Renderer {
 	private:
 		glm::mat4 projection;
 		glm::mat4 view;
-		float angle = 0.0f;
-
-		std::shared_ptr<Container> container = nullptr;
 
 	public:
+		std::shared_ptr<Container> container = nullptr;
+
 		Renderer(float aspectRatio);
 		void render();
 
-		void setContainer(std::shared_ptr<Container> container);
-		std::shared_ptr<Container> getContainer() const;
 		void rotateCamera(float angleOffset, glm::vec3 axis);
 		void zoomCamera(float zoomOffset);
 		void initCamera();

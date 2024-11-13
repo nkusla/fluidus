@@ -72,10 +72,6 @@ ApplicationWindow::~ApplicationWindow() {
 	glfwTerminate();
 }
 
-void ApplicationWindow::setRenderer(std::shared_ptr<Renderer> renderer) {
-	this->renderer = renderer;
-}
-
 GLFWwindow* ApplicationWindow::getWindow() { return window; }
 
 void ApplicationWindow::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
@@ -122,12 +118,12 @@ void ApplicationWindow::displayAllWidgets() {
 	ImGui::SetWindowSize(ImVec2(250, 380));
 
 	ImGui::Text("Container dimensions");
-	ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
-	ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
-	ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, 1.0f, 3.0f);
+	bool widthChanged = ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
+	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
+	bool depthChanged = ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, 1.0f, 3.0f);
 
-	// This should be with some kind of observer pattern
-	renderer->getContainer()->updateDimensions(Config::CONTAINER_DIMENSIONS);
+	if(widthChanged || heightChanged || depthChanged)
+		renderer->container->updateDimensions(Config::CONTAINER_DIMENSIONS);
 
 	ImGui::Spacing();
 	ImGui::Text("FPS: %.2f", fps);
