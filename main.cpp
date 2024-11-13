@@ -8,11 +8,12 @@ int main() {
 	float aspectRatio = Config::SCREEN_SIZE.x / Config::SCREEN_SIZE.y;
 
 	auto renderer = std::make_shared<Renderer>(aspectRatio);
-	renderer->container = std::make_shared<Container>(Config::CONTAINER_DIMENSIONS);
-	renderer->fluid = std::make_shared<Fluid>();
+	auto container = std::make_shared<Container>(Config::CONTAINER_DIMENSIONS);
+	auto fluid = std::make_shared<Fluid>();
+	auto simulator = std::make_shared<Simulator>(fluid->getParticles());
 
-	auto simulator = std::make_shared<Simulator>();
-	simulator->particles = renderer->fluid->particles;
+	renderer->container = container;
+	renderer->fluid = fluid;
 
 	appWindow.renderer = renderer;
 	appWindow.simulator = simulator;

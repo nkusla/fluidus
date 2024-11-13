@@ -100,3 +100,9 @@ void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glUseProgram(0);
 }
+
+void Container::updateVBO() {
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}

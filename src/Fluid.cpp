@@ -1,7 +1,7 @@
 #include "../include/Fluid.hpp"
 
 Fluid::Fluid() {
-	generateParticles(1000);
+	generateRandParticles(1000);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -9,7 +9,7 @@ Fluid::Fluid() {
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, particles->size() * sizeof(Particle), particles->data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, particles->size() * sizeof(Particle), particles->data(), GL_DYNAMIC_DRAW);
 
 	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, position));
@@ -36,7 +36,11 @@ Fluid::Fluid() {
 	);
 }
 
-void Fluid::generateParticles(int count) {
+std::shared_ptr<std::vector<Particle>> Fluid::getParticles() {
+	return particles;
+}
+
+void Fluid::generateRandParticles(int count) {
 	particles = std::make_shared<std::vector<Particle>>(count);
 
 	std::random_device rd;
@@ -70,8 +74,8 @@ void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(0);
 }
 
-void Fluid::update() {
+void Fluid::updateVBO() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, particles->size() * sizeof(Particle), particles->data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, particles->size() * sizeof(Particle), particles->data(), GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

@@ -1,5 +1,9 @@
 #include "../include/Simulator.hpp"
 
+Simulator::Simulator(std::shared_ptr<std::vector<Particle>> particles) {
+	this->particles = particles;
+}
+
 void Simulator::step() {
 	for (auto &p : *particles) {
 		p.acceleration += GRAVITY;

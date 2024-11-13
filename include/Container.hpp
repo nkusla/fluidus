@@ -27,6 +27,7 @@ class Container : public IObject {
 		glm::vec3 getDimensions() const;
 
 		void render(const glm::mat4 &view, const glm::mat4 &projection) override;
+		void updateVBO() override;
 };
 
 #endif

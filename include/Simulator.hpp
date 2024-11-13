@@ -9,9 +9,10 @@
 
 class Simulator {
 	private:
+		std::shared_ptr<std::vector<Particle>> particles = nullptr;
 
 	public:
-		std::shared_ptr<std::vector<Particle>> particles = nullptr;
+		Simulator(std::shared_ptr<std::vector<Particle>> particles);
 
 		void step();
 };
