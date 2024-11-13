@@ -140,6 +140,7 @@ void ApplicationWindow::runFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	displayAllWidgets();
 
+	simulator->step();
 	renderer->render();
 
 	glfwSwapBuffers(window);

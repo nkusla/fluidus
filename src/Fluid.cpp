@@ -47,7 +47,7 @@ void Fluid::generateParticles(int count) {
 		particle.position = glm::vec3(dis(gen), dis(gen), dis(gen));
 		particle.velocity = glm::vec3(0.0f);
 		particle.acceleration = glm::vec3(0.0f);
-		particle.mass = 1.0;
+		particle.mass = 1.0f;
 	}
 }
 
@@ -68,4 +68,10 @@ void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
+}
+
+void Fluid::update() {
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, particles->size() * sizeof(Particle), particles->data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

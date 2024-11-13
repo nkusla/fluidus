@@ -18,8 +18,8 @@ class Fluid : public IObject {
 		std::shared_ptr<std::vector<Particle>> particles = nullptr;
 
 		Fluid();
-
 		void render(const glm::mat4 &view, const glm::mat4 &projection) override;
+		void update();
 };
 
 #endif // FLUID_HPP

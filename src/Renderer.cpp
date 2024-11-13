@@ -32,6 +32,8 @@ void Renderer::zoomCamera(float zoomOffset) {
 }
 
 void Renderer::render() {
+	fluid->update();
+
 	container->render(view, projection);
 	fluid->render(view, projection);
 }

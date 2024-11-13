@@ -12,6 +12,7 @@
 #include <memory>
 #include "Renderer.hpp"
 #include "Config.hpp"
+#include "Simulator.hpp"
 
 class ApplicationWindow {
 	private:
@@ -25,6 +26,7 @@ class ApplicationWindow {
 		void InitImGui();
 	public:
 		std::shared_ptr<Renderer> renderer = nullptr;
+		std::shared_ptr<Simulator> simulator = nullptr;
 
 		ApplicationWindow(glm::vec2 screenSize);
 		~ApplicationWindow();
