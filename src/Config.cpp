@@ -7,3 +7,4 @@ float Config::ROTATION_ANGLE = 90.0f;
 float Config::G = 1e-7f;
 float Config::STEP = 0.01f;
 int Config::PARTICLE_COUNT = 1000;
+float Config::DAMPING = 0.3f;

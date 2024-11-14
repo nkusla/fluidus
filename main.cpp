@@ -10,7 +10,10 @@ int main() {
 	auto renderer = std::make_shared<Renderer>(aspectRatio);
 	auto container = std::make_shared<Container>(Config::CONTAINER_DIMENSIONS);
 	auto fluid = std::make_shared<Fluid>();
-	auto simulator = std::make_shared<Simulator>(fluid->getParticles());
+	auto simulator = std::make_shared<Simulator>(
+		fluid->getParticles(),
+		container
+	);
 
 	renderer->container = container;
 	renderer->fluid = fluid;

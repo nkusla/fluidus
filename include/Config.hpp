@@ -18,6 +18,7 @@ class Config {
 		static float G;
 		static float STEP;
 		static int PARTICLE_COUNT;
+		static float DAMPING;
 };
 
 #endif
