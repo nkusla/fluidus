@@ -11,7 +11,10 @@ class ShaderLoader {
 	public:
 		ShaderLoader() = delete;
 		static std::string readShaderFromFile(std::string filepath);
-		static GLuint loadShaders(std::string vertexShaderPath, std::string fragmentShaderPath);
+		static GLuint loadShaders(
+			std::string vertexShaderPath,
+			std::string fragmentShaderPath,
+			std::string geometryShaderPath = "");
 };
 
 #endif

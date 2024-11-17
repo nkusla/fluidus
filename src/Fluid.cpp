@@ -34,7 +34,8 @@ Fluid::Fluid() {
 
 	shaderProgram = ShaderLoader::loadShaders(
 		"../glsl/fluid.vert.glsl",
-		"../glsl/fluid.frag.glsl"
+		"../glsl/fluid.frag.glsl",
+		"../glsl/fluid.geom.glsl"
 	);
 }
 
@@ -74,6 +75,11 @@ void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
+
+	    GLenum err;
+    while ((err = glGetError()) != GL_NO_ERROR) {
+        std::cerr << "OpenGL error: " << err << std::endl;
+    }
 }
 
 void Fluid::updateVBO() {
