@@ -39,12 +39,17 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
 
 	glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	InitImGui();
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 	glfwSetScrollCallback(window, ScrollCallback);
 	glfwSetWindowUserPointer(window, static_cast<void*>(this));
+
+	#ifdef DEBUG
+		PrintOpenGLInfo();
+	#endif
 }
 
 void ApplicationWindow::InitImGui() {
@@ -167,4 +172,34 @@ void ApplicationWindow::updateFPS() {
 		frameCount = 0;
 		lastFPSTime = currentTime;
 	}
+}
+
+void ApplicationWindow::PrintOpenGLInfo() {
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+	const GLubyte* vendor = glGetString(GL_VENDOR);
+	const GLubyte* version = glGetString(GL_VERSION);
+	const GLubyte* glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+	GLint major, minor;
+	glGetIntegerv(GL_MAJOR_VERSION, &major);
+	glGetIntegerv(GL_MINOR_VERSION, &minor);
+
+	std::cout << "\033[1;33mOpenGL summary\033[0m" << std::endl;
+	std::cout << "  OpenGL Renderer: " << renderer << std::endl;
+	std::cout << "  OpenGL Vendor: " << vendor << std::endl;
+	std::cout << "  OpenGL Version: " << version << std::endl;
+	std::cout << "  GLSL Version: " << glslVersion << std::endl;
+	std::cout << "  OpenGL Version (integer): " << major << "." << minor << std::endl;
+
+	GLint output;
+	std::cout << std::endl;
+	std::cout << "\033[1;33mGeometry shader\033[0m" << std::endl;
+	glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES, &output);
+	std::cout << "  GL_MAX_GEOMETRY_OUTPUT_VERTICES: " << output << std::endl;
+
+	glGetIntegerv(GL_MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS, &output);
+	std::cout << "  GL_MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS: " << output << std::endl;
+
+	glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &output);
+	std::cout << "  GL_MAX_GEOMETRY_OUTPUT_COMPONENTS: " << output << std::endl;
 }

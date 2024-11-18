@@ -9,6 +9,7 @@
 #include "../imgui/imgui_impl_opengl3.h"
 
 #include <iostream>
+#include <iomanip>
 #include <memory>
 #include "Renderer.hpp"
 #include "Config.hpp"
@@ -16,7 +17,7 @@
 
 struct MenuVariables {
 	float G = 1.0f;
-	float G_SCALE = 1e-5;
+	float G_SCALE = 1e-5f;
 };
 
 class ApplicationWindow {
@@ -44,6 +45,7 @@ class ApplicationWindow {
 		void displayAllWidgets();
 		void runFrame();
 		void updateFPS();
+		void PrintOpenGLInfo();
 
 		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 };
