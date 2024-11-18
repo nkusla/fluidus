@@ -17,7 +17,7 @@ class ShaderLoader {
 	public:
 		ShaderLoader() = delete;
 
-		static GLuint loadShaders(
+		static GLuint LoadShaders(
 			std::string vertexShaderPath,
 			std::string fragmentShaderPath,
 			std::string geometryShaderPath = "");

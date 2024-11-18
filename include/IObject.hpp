@@ -13,9 +13,9 @@ class IObject {
 		glm::mat4 model = glm::mat4(1.0f);
 
 	public:
-		virtual void render(const glm::mat4 &view, const glm::mat4 &projection) = 0;
+		virtual void Render(const glm::mat4 &view, const glm::mat4 &projection) = 0;
 
-		virtual void updateVBO() = 0;
+		virtual void UpdateVBO() = 0;
 
 		virtual ~IObject() {
 			glDeleteVertexArrays(1, &VAO);

@@ -19,11 +19,11 @@ class Renderer {
 		std::shared_ptr<Fluid> fluid = nullptr;
 
 		Renderer(float aspectRatio);
-		void render();
+		void Render();
 
-		void rotateCamera(float angleOffset, glm::vec3 axis);
-		void zoomCamera(float zoomOffset);
-		void initCamera();
+		void RotateCamera(float angleOffset, glm::vec3 axis);
+		void ZoomCamera(float zoomOffset);
+		void InitCamera();
 };
 
 #endif

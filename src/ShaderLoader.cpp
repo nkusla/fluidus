@@ -16,7 +16,7 @@ std::string ShaderLoader::readShaderFromFile(std::string filepath) {
 	return shaderStream.str();
 }
 
-GLuint ShaderLoader::loadShaders(std::string vertexShaderPath, std::string fragmentShaderPath, std::string geometryShaderPath) {
+GLuint ShaderLoader::LoadShaders(std::string vertexShaderPath, std::string fragmentShaderPath, std::string geometryShaderPath) {
 
 	GLuint shaderProgram = glCreateProgram();
 

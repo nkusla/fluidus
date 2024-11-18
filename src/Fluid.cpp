@@ -3,7 +3,7 @@
 Fluid::Fluid() {
 	particles = std::make_shared<std::vector<Particle>>(Config::PARTICLE_COUNT);
 
-	generateRandParticles(Config::PARTICLE_COUNT);
+	GenerateRandParticles(Config::PARTICLE_COUNT);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -32,18 +32,18 @@ Fluid::Fluid() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	shaderProgram = ShaderLoader::loadShaders(
+	shaderProgram = ShaderLoader::LoadShaders(
 		"../glsl/fluid.vert.glsl",
 		"../glsl/fluid.frag.glsl",
 		"../glsl/fluid.geom.glsl"
 	);
 }
 
-std::shared_ptr<std::vector<Particle>> Fluid::getParticles() {
+std::shared_ptr<std::vector<Particle>> Fluid::GetParticles() {
 	return particles;
 }
 
-void Fluid::generateRandParticles(int count) {
+void Fluid::GenerateRandParticles(int count) {
 	particles->resize(count);
 
 	std::random_device rd;
@@ -58,7 +58,7 @@ void Fluid::generateRandParticles(int count) {
 	}
 }
 
-void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
+void Fluid::Render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
 
 	GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
@@ -77,7 +77,7 @@ void Fluid::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(0);
 }
 
-void Fluid::updateVBO() {
+void Fluid::UpdateVBO() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, particles->size() * sizeof(Particle), particles->data(), GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

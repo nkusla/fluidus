@@ -38,13 +38,13 @@ class ApplicationWindow {
 		ApplicationWindow(glm::vec2 screenSize);
 		~ApplicationWindow();
 
-		GLFWwindow* getWindow();
+		GLFWwindow* GetWindow();
 
-		bool checkClose();
-		void checKeyPressed();
-		void displayAllWidgets();
-		void runFrame();
-		void updateFPS();
+		bool CheckClose();
+		void ChecKeyPressed();
+		void DisplayAllWidgets();
+		void RunFrame();
+		void UpdateFPS();
 		void PrintOpenGLInfo();
 
 		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);

@@ -18,16 +18,16 @@ class Container : public IObject {
 		std::array<float, 56> vertices;
 		std::array<unsigned int, 36> indices;
 
-		void defineVerticies();
+		void DefineVerticies();
 	public:
 		Container(glm::vec3 dimensions);
 		~Container() = default;
 
-		void updateDimensions(glm::vec3 newDimensions);
-		glm::vec3 getDimensions() const;
+		void UpdateDimensions(glm::vec3 newDimensions);
+		glm::vec3 GetDimensions() const;
 
-		void render(const glm::mat4 &view, const glm::mat4 &projection) override;
-		void updateVBO() override;
+		void Render(const glm::mat4 &view, const glm::mat4 &projection) override;
+		void UpdateVBO() override;
 };
 
 #endif

@@ -77,19 +77,19 @@ ApplicationWindow::~ApplicationWindow() {
 	glfwTerminate();
 }
 
-GLFWwindow* ApplicationWindow::getWindow() { return window; }
+GLFWwindow* ApplicationWindow::GetWindow() { return window; }
 
 void ApplicationWindow::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	ApplicationWindow* appWindow = static_cast<ApplicationWindow*>(glfwGetWindowUserPointer(window));
-	appWindow->renderer->zoomCamera(yoffset * Config::ZOOM_FACTOR);
+	appWindow->renderer->ZoomCamera(yoffset * Config::ZOOM_FACTOR);
 }
 
-bool ApplicationWindow::checkClose() {
+bool ApplicationWindow::CheckClose() {
 	return (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
 		&& glfwWindowShouldClose(window) == 0);
 }
 
-void ApplicationWindow::checKeyPressed() {
+void ApplicationWindow::ChecKeyPressed() {
 	double currentTime = glfwGetTime();
 	double deltaTime = currentTime - lastKeyPressTime;
 	lastKeyPressTime = currentTime;
@@ -97,28 +97,28 @@ void ApplicationWindow::checKeyPressed() {
 	float rotationAngle = Config::ROTATION_ANGLE * deltaTime;
 
 	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
-		renderer->initCamera();
+		renderer->InitCamera();
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-		renderer->fluid->generateRandParticles(Config::PARTICLE_COUNT);
+		renderer->fluid->GenerateRandParticles(Config::PARTICLE_COUNT);
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		renderer->rotateCamera(rotationAngle, X_AXIS);
+		renderer->RotateCamera(rotationAngle, X_AXIS);
 	}
 	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		renderer->rotateCamera(-rotationAngle, X_AXIS);
+		renderer->RotateCamera(-rotationAngle, X_AXIS);
 	}
 	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		renderer->rotateCamera(-rotationAngle, Y_AXIS);
+		renderer->RotateCamera(-rotationAngle, Y_AXIS);
 	}
 	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		renderer->rotateCamera(rotationAngle, Y_AXIS);
+		renderer->RotateCamera(rotationAngle, Y_AXIS);
 	}
 }
 
-void ApplicationWindow::displayAllWidgets() {
+void ApplicationWindow::DisplayAllWidgets() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -134,7 +134,7 @@ void ApplicationWindow::displayAllWidgets() {
 	bool depthChanged = ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, 1.0f, 3.0f);
 
 	if(widthChanged || heightChanged || depthChanged)
-		renderer->container->updateDimensions(Config::CONTAINER_DIMENSIONS);
+		renderer->container->UpdateDimensions(Config::CONTAINER_DIMENSIONS);
 
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Physics parameters");
@@ -149,21 +149,21 @@ void ApplicationWindow::displayAllWidgets() {
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void ApplicationWindow::runFrame() {
-	updateFPS();
+void ApplicationWindow::RunFrame() {
+	UpdateFPS();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	displayAllWidgets();
+	DisplayAllWidgets();
 
-	simulator->step();
-	renderer->render();
+	simulator->Step();
+	renderer->Render();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 };
 
-void ApplicationWindow::updateFPS() {
+void ApplicationWindow::UpdateFPS() {
 	double currentTime = glfwGetTime();
 	frameCount++;
 

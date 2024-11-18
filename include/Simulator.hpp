@@ -16,7 +16,7 @@ class Simulator {
 	public:
 		Simulator(std::shared_ptr<std::vector<Particle>> particles, std::shared_ptr<Container> container);
 
-		void step();
+		void Step();
 };
 
 #endif // ENGINE_HPP

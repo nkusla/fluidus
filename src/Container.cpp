@@ -5,7 +5,7 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	float height = dimensions.y;
 	float depth = dimensions.z;
 
-	defineVerticies();
+	DefineVerticies();
 
 	indices = {
 		// Front face
@@ -42,13 +42,13 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	shaderProgram = ShaderLoader::loadShaders(
+	shaderProgram = ShaderLoader::LoadShaders(
 		"../glsl/container.vert.glsl",
 		"../glsl/container.frag.glsl"
 	);
 }
 
-void Container::defineVerticies() {
+void Container::DefineVerticies() {
 	float width = dimensions.x;
 	float height = dimensions.y;
 	float depth = dimensions.z;
@@ -68,20 +68,20 @@ void Container::defineVerticies() {
 	};
 }
 
-glm::vec3 Container::getDimensions() const {
+glm::vec3 Container::GetDimensions() const {
 	return dimensions;
 }
 
-void Container::updateDimensions(glm::vec3 newDimensions) {
+void Container::UpdateDimensions(glm::vec3 newDimensions) {
 	dimensions = newDimensions;
-	defineVerticies();
+	DefineVerticies();
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
+void Container::Render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -101,7 +101,7 @@ void Container::render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(0);
 }
 
-void Container::updateVBO() {
+void Container::UpdateVBO() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices.data());
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

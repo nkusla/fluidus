@@ -8,8 +8,8 @@ Simulator::Simulator(
 	this->container = container;
 }
 
-void Simulator::step() {
-	glm::vec3 dimensions = container->getDimensions();
+void Simulator::Step() {
+	glm::vec3 dimensions = container->GetDimensions();
 	float lowerBound = -dimensions.y / 2.0f;
 
 	for (auto &p : *particles) {

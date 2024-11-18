@@ -18,10 +18,10 @@ class Fluid : public IObject {
 
 	public:
 		Fluid();
-		void generateRandParticles(int count);
-		std::shared_ptr<std::vector<Particle>> getParticles();
-		void render(const glm::mat4 &view, const glm::mat4 &projection) override;
-		void updateVBO() override;
+		void GenerateRandParticles(int count);
+		std::shared_ptr<std::vector<Particle>> GetParticles();
+		void Render(const glm::mat4 &view, const glm::mat4 &projection) override;
+		void UpdateVBO() override;
 };
 
 #endif // FLUID_HPP
