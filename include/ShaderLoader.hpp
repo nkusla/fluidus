@@ -7,10 +7,16 @@
 #include <iostream>
 #include <GL/glew.h>
 
+#define INFO_LOG_SIZE 1024
+
 class ShaderLoader {
+	private:
+		static std::string readShaderFromFile(std::string filepath);
+		static void CompileShader(const GLuint& shaderProgram, std::string shaderPath, GLenum shaderType);
+
 	public:
 		ShaderLoader() = delete;
-		static std::string readShaderFromFile(std::string filepath);
+
 		static GLuint loadShaders(
 			std::string vertexShaderPath,
 			std::string fragmentShaderPath,
