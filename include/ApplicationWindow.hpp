@@ -43,6 +43,8 @@ class ApplicationWindow {
 		bool CheckClose();
 		void ChecKeyPressed();
 		void DisplayAllWidgets();
+		void DisplayParametersWidgets();
+		void DisplayInfoWidgets();
 		void RunFrame();
 		void UpdateFPS();
 		void PrintOpenGLInfo();

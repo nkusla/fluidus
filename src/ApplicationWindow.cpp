@@ -123,6 +123,14 @@ void ApplicationWindow::DisplayAllWidgets() {
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
+	DisplayParametersWidgets();
+	DisplayInfoWidgets();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void ApplicationWindow::DisplayParametersWidgets() {
 	ImGui::Begin("Controls", nullptr, ImGuiWindowFlags_NoMove);
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, 0));
 	ImGui::SetWindowSize(ImVec2(250, 380));
@@ -142,11 +150,21 @@ void ApplicationWindow::DisplayAllWidgets() {
 	Config::G = variables.G * variables.G_SCALE;
 
 	ImGui::Spacing(); ImGui::Spacing();
-	ImGui::Text("FPS: %.2f", fps);
 
 	ImGui::End();
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void ApplicationWindow::DisplayInfoWidgets() {
+	ImGui::Begin("Info", nullptr, ImGuiWindowFlags_NoMove);
+	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, screenSize.y - 200));
+	ImGui::SetWindowSize(ImVec2(250, 200));
+
+	ImGui::Spacing();
+	ImGui::Text("FPS: %.2f", fps);
+	ImGui::Spacing(); ImGui::Spacing();
+	ImGui::Text("Particles count: %ld", renderer->fluid->GetParticles()->size());
+
+	ImGui::End();
 }
 
 void ApplicationWindow::RunFrame() {
