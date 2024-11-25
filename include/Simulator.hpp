@@ -17,6 +17,7 @@ class Simulator {
 		Simulator(std::shared_ptr<std::vector<Particle>> particles, std::shared_ptr<Container> container);
 
 		void Step();
+		void CheckWallCollision(Particle &p);
 };
 
 #endif // ENGINE_HPP
