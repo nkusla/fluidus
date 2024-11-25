@@ -10,6 +10,7 @@ Simulator::Simulator(
 
 void Simulator::Step() {
 
+	#pragma omp parallel for
 	for (auto &p : *particles) {
 		p.acceleration += GRAVITY;
 		p.velocity += p.acceleration * Config::STEP;

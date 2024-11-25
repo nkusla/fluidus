@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <omp.h>
 
 #include "Particle.hpp"
 #include "Config.hpp"
