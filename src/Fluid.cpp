@@ -34,8 +34,8 @@ Fluid::Fluid() {
 
 	shaderProgram = ShaderLoader::LoadShaders(
 		"../glsl/fluid.vert.glsl",
-		"../glsl/fluid.frag.glsl",
-		"../glsl/fluid.geom.glsl"
+		"../glsl/fluid.frag.glsl"
+		// "../glsl/fluid.geom.glsl"
 	);
 }
 
@@ -53,6 +53,7 @@ void Fluid::GenerateRandParticles(int count) {
 	for (auto &particle : *particles) {
 		particle.position = glm::vec3(dis(gen), dis(gen), dis(gen));
 		particle.velocity = glm::vec3(dis(gen), dis(gen), dis(gen));
+		//particle.velocity = glm::vec3(0.0f);
 		particle.acceleration = glm::vec3(0.0f);
 		particle.mass = 1.0f;
 	}

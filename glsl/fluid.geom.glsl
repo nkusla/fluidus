@@ -1,3 +1,6 @@
+// ATM this is just a passthrough geometry shader that takes a single point and renders it as a point.
+// THIS IS NOT USED IN THE CURRENT IMPLEMENTATION
+
 #version 330 core
 
 layout(points) in;

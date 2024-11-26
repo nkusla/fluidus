@@ -175,8 +175,11 @@ void ApplicationWindow::DisplayParametersWidgets() {
 
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Physics parameters");
-	ImGui::SliderFloat("Gravity", &variables.G, 1.0f, 100.0f);
+	ImGui::SliderFloat("Gravity", &variables.G, 0.0f, 100.0f);
 	Config::G = variables.G * variables.G_SCALE;
+
+	ImGui::SliderFloat("Step", &variables.STEP, 1.0f, 100.0f);
+	Config::STEP = variables.STEP * variables.STEP_SCALE;
 
 	ImGui::Spacing(); ImGui::Spacing();
 

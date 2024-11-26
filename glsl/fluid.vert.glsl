@@ -9,6 +9,9 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform mat4 model;
 
+out float property;
+
 void main() {
-    gl_Position = model * vec4(position, 1.0);
+    gl_Position = projection * view * model * vec4(position, 1.0);
+    property = length(velocity);
 }

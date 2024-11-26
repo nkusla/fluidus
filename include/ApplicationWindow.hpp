@@ -16,8 +16,10 @@
 #include "Simulator.hpp"
 
 struct MenuVariables {
-	float G = 1.0f;
+	float G = 0.0f;
 	float G_SCALE = 1e-5f;
+	float STEP = 50.0f;
+	float STEP_SCALE = 1e-4f;
 };
 
 class ApplicationWindow {

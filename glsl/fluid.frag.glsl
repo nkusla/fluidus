@@ -1,7 +1,14 @@
 #version 330 core
 
-out vec4 FragColor;
+in float property;
+out vec4 fragColor;
 
 void main() {
-	FragColor = vec4(153.0 / 255.0, 192.0 / 255.0, 227.0 / 255.0, 1.0);
+	vec3 color_slow = vec3(26.0, 202.0, 226.0) / 255.0; // blue
+	vec3 color_fast = vec3(255.0, 33.0, 33.0) / 255.0; // red
+
+	float t = clamp(property, 0.0, 1.0);
+	vec3 color = mix(color_slow, color_fast, t);
+
+	fragColor = vec4(color, 1.0);
 }
