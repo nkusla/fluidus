@@ -8,7 +8,21 @@ Simulator::Simulator(
 	this->container = container;
 }
 
+double Simulator::GetTime() const {
+	return time;
+}
+
+void Simulator::Reset() {
+	time = 0.0;
+}
+
+void Simulator::StartStop() {
+	stopped = !stopped;
+}
+
 void Simulator::Step() {
+	if (stopped)
+		return;
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
@@ -18,6 +32,8 @@ void Simulator::Step() {
 
 		CheckWallCollision(p);
 	}
+
+	time += Config::STEP;
 }
 
 void Simulator::CheckWallCollision(Particle &p) {

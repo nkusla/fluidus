@@ -30,6 +30,10 @@ class ApplicationWindow {
 		float fps = 0.0f;
 		MenuVariables variables;
 
+		bool spacePressed = false;
+		bool HPressed = false;
+		bool hideWidgets = false;
+
 		void InitImGui();
 	public:
 		std::shared_ptr<Renderer> renderer = nullptr;

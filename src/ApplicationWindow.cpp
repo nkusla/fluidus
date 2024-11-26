@@ -101,6 +101,7 @@ void ApplicationWindow::ChecKeyPressed() {
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+		simulator->Reset();
 		renderer->fluid->GenerateRandParticles(Config::PARTICLE_COUNT);
 	}
 
@@ -116,9 +117,33 @@ void ApplicationWindow::ChecKeyPressed() {
 	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		renderer->RotateCamera(rotationAngle, Y_AXIS);
 	}
+
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		if(!spacePressed) {
+			simulator->StartStop();
+			spacePressed = true;
+		}
+	}
+	else if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) {
+		spacePressed = false;
+	}
+
+	if(glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
+		if(!HPressed) {
+			hideWidgets = !hideWidgets;
+			HPressed = true;
+		}
+	}
+	else if(glfwGetKey(window, GLFW_KEY_H) == GLFW_RELEASE) {
+		HPressed = false;
+	}
+
 }
 
 void ApplicationWindow::DisplayAllWidgets() {
+	if(hideWidgets)
+		return;
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -131,11 +156,15 @@ void ApplicationWindow::DisplayAllWidgets() {
 }
 
 void ApplicationWindow::DisplayParametersWidgets() {
-	ImGui::Begin("Controls", nullptr, ImGuiWindowFlags_NoMove);
+	ImGui::Begin("Controls", nullptr,
+		ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoResize);
+
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, 0));
 	ImGui::SetWindowSize(ImVec2(250, 380));
 
-	ImGui::Spacing();
+	ImGui::Text("Particles count: %ld", renderer->fluid->GetParticles()->size());
+	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Container dimensions");
 	bool widthChanged = ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
 	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
@@ -155,14 +184,20 @@ void ApplicationWindow::DisplayParametersWidgets() {
 }
 
 void ApplicationWindow::DisplayInfoWidgets() {
-	ImGui::Begin("Info", nullptr, ImGuiWindowFlags_NoMove);
-	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, screenSize.y - 200));
-	ImGui::SetWindowSize(ImVec2(250, 200));
+	ImGui::Begin("Info", nullptr,
+		ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoCollapse
+		| ImGuiWindowFlags_NoTitleBar
+		| ImGuiWindowFlags_NoBackground);
 
-	ImGui::Spacing();
+	ImGui::SetWindowPos(ImVec2(screenSize.x - 110, screenSize.y - 70));
+	ImGui::SetWindowSize(ImVec2(110, 70));
+
 	ImGui::Text("FPS: %.2f", fps);
 	ImGui::Spacing(); ImGui::Spacing();
-	ImGui::Text("Particles count: %ld", renderer->fluid->GetParticles()->size());
+	ImGui::Text("Time: %.2f", simulator->GetTime());
+	ImGui::Spacing(); ImGui::Spacing();
 
 	ImGui::End();
 }
