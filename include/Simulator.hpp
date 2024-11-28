@@ -4,10 +4,12 @@
 #include <memory>
 #include <vector>
 #include <omp.h>
+#include <cmath>
 
 #include "Particle.hpp"
 #include "Config.hpp"
 #include "Container.hpp"
+#include "SmoothingKernels.hpp"
 
 class Simulator {
 	private:
@@ -25,6 +27,10 @@ class Simulator {
 		void Reset();
 		void Step();
 		void CheckWallCollision(Particle &p);
+		void CalculateDensities();
+		void CalculatePressureForces();
+
+		inline float LinearEOS(Particle &p);
 };
 
 #endif // ENGINE_HPP

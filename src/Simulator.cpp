@@ -6,6 +6,11 @@ Simulator::Simulator(
 
 	this->particles = particles;
 	this->container = container;
+
+	#ifdef _OPENMP
+		int num_threads = omp_get_num_procs() / 2;
+		omp_set_num_threads(num_threads);
+	#endif
 }
 
 double Simulator::GetTime() const {
@@ -23,6 +28,9 @@ void Simulator::StartStop() {
 void Simulator::Step() {
 	if (stopped)
 		return;
+
+	CalculateDensities();
+	CalculatePressureForces();
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
@@ -77,4 +85,43 @@ void Simulator::CheckWallCollision(Particle &p) {
 		p.velocity.z = -p.velocity.z * Config::DAMPING;
 		p.acceleration.z = 0.0f; // Reset other accelerations
 	}
+}
+
+void Simulator::CalculateDensities() {
+
+	#pragma omp parallel for
+	for(auto &p1 : *particles) {
+		p1.density = 0.0f;
+		for(auto &p2 : *particles) {
+			if (&p1 == &p2)
+				continue;
+
+			float distance = glm::distance(p1.position, p2.position);
+			p1.density += p2.mass * SpikyKernel(distance, Config::SMOOTHING_RADIUS);
+		}
+	}
+}
+
+void Simulator::CalculatePressureForces() {
+
+	#pragma omp parallel for
+	for(auto &p1 : *particles) {
+		float pressure1 = LinearEOS(p1);
+		glm::vec3 force = glm::vec3(0.0f);
+
+		for(auto &p2 : *particles) {
+			if (&p1 == &p2)
+				continue;
+
+			float pressure2 = LinearEOS(p2);
+			float distance = glm::distance(p1.position, p2.position);
+			glm::vec3 direction = glm::normalize(p1.position - p2.position);
+			float force = -p2.mass * (pressure1 + pressure2) / (2.0f * p2.density) * SpikyKernelDeriv(distance, Config::SMOOTHING_RADIUS);
+			p1.acceleration += force * direction;
+		}
+	}
+}
+
+inline float Simulator::LinearEOS(Particle &p) {
+	return Config::INCOMPRESS_FACTOR * (p.density - Config::REST_DENSITY);
 }

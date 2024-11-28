@@ -19,6 +19,9 @@ class Config {
 		static float STEP;
 		static int PARTICLE_COUNT;
 		static float DAMPING;
+		static float SMOOTHING_RADIUS;
+		static float REST_DENSITY;
+		static float INCOMPRESS_FACTOR;
 };
 
 #endif

@@ -52,8 +52,8 @@ void Fluid::GenerateRandParticles(int count) {
 
 	for (auto &particle : *particles) {
 		particle.position = glm::vec3(dis(gen), dis(gen), dis(gen));
-		particle.velocity = glm::vec3(dis(gen), dis(gen), dis(gen));
-		//particle.velocity = glm::vec3(0.0f);
+		//particle.velocity = glm::vec3(dis(gen), dis(gen), dis(gen));
+		particle.velocity = glm::vec3(0.0f);
 		particle.acceleration = glm::vec3(0.0f);
 		particle.mass = 1.0f;
 	}
