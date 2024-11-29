@@ -5,6 +5,7 @@
 #include <vector>
 #include <omp.h>
 #include <cmath>
+#include <numeric>
 
 #include "Particle.hpp"
 #include "Config.hpp"

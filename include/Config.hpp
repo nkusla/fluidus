@@ -13,6 +13,7 @@ class Config {
 	public:
 		static glm::vec3 CONTAINER_DIMENSIONS;
 		static glm::vec2 SCREEN_SIZE;
+		static unsigned int SEED;
 		static float ZOOM_FACTOR;
 		static float ROTATION_ANGLE;
 		static float G;
@@ -21,7 +22,7 @@ class Config {
 		static float DAMPING;
 		static float SMOOTHING_RADIUS;
 		static float REST_DENSITY;
-		static float INCOMPRESS_FACTOR;
+		static float STIFFNESS_COEFF;
 };
 
 #endif

@@ -41,6 +41,13 @@ void Simulator::Step() {
 		CheckWallCollision(p);
 	}
 
+	// float a = std::accumulate(particles->begin(), particles->end(), 0.0f,
+  //       [](float sum, const Particle& p) {
+  //           return sum + glm::length(p.velocity);
+  //       }) / static_cast<float>(particles->size());
+
+	// std::cout << "Average velocity: " << a << std::endl;
+
 	time += Config::STEP;
 }
 
@@ -115,13 +122,16 @@ void Simulator::CalculatePressureForces() {
 
 			float pressure2 = LinearEOS(p2);
 			float distance = glm::distance(p1.position, p2.position);
+			if (distance == 0.0f || p1.density == 0.0f || p2.density == 0.0f)
+				continue;
+
 			glm::vec3 direction = glm::normalize(p1.position - p2.position);
 			float force = -p2.mass * (pressure1 + pressure2) / (2.0f * p2.density) * SpikyKernelDeriv(distance, Config::SMOOTHING_RADIUS);
-			p1.acceleration += force * direction;
+			p1.acceleration += force * direction / p1.density;
 		}
 	}
 }
 
 inline float Simulator::LinearEOS(Particle &p) {
-	return Config::INCOMPRESS_FACTOR * (p.density - Config::REST_DENSITY);
+	return Config::STIFFNESS_COEFF * (p.density - Config::REST_DENSITY);
 }

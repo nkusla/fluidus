@@ -20,6 +20,8 @@ struct MenuVariables {
 	float G_SCALE = 1e-5f;
 	float STEP = 50.0f;
 	float STEP_SCALE = 1e-4f;
+	float STIFFNESS_COEFF = 1e2f;
+	float STIFFNESS_COEFF_SCALE = 1e-5f;
 };
 
 class ApplicationWindow {

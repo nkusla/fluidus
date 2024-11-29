@@ -181,6 +181,9 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	ImGui::SliderFloat("Step", &variables.STEP, 1.0f, 100.0f);
 	Config::STEP = variables.STEP * variables.STEP_SCALE;
 
+	ImGui::SliderFloat("Stiffness", &variables.STIFFNESS_COEFF, 0.0f, 1000.0f);
+	Config::STIFFNESS_COEFF = variables.STIFFNESS_COEFF * variables.STIFFNESS_COEFF_SCALE;
+
 	ImGui::Spacing(); ImGui::Spacing();
 
 	ImGui::End();

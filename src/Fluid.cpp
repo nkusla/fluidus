@@ -44,10 +44,7 @@ std::shared_ptr<std::vector<Particle>> Fluid::GetParticles() {
 }
 
 void Fluid::GenerateRandParticles(int count) {
-	particles->resize(count);
-
-	std::random_device rd;
-	std::mt19937 gen(rd());
+	std::mt19937 gen(Config::SEED);
 	std::uniform_real_distribution<float> dis(-0.5f, 0.5f);
 
 	for (auto &particle : *particles) {
