@@ -156,7 +156,7 @@ void ApplicationWindow::DisplayAllWidgets() {
 }
 
 void ApplicationWindow::DisplayParametersWidgets() {
-	ImGui::Begin("Controls", nullptr,
+	ImGui::Begin("Parameters", nullptr,
 		ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize);
 
@@ -173,20 +173,49 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	if(widthChanged || heightChanged || depthChanged)
 		renderer->container->UpdateDimensions(Config::CONTAINER_DIMENSIONS);
 
-	ImGui::Spacing(); ImGui::Spacing();
-	ImGui::Text("Physics parameters");
-	ImGui::SliderFloat("Gravity", &variables.G, 0.0f, 100.0f);
-	Config::G = variables.G * variables.G_SCALE;
-
-	ImGui::SliderFloat("Step", &variables.STEP, 1.0f, 100.0f);
-	Config::STEP = variables.STEP * variables.STEP_SCALE;
-
-	ImGui::SliderFloat("Stiffness", &variables.STIFFNESS_COEFF, 0.0f, 1000.0f);
-	Config::STIFFNESS_COEFF = variables.STIFFNESS_COEFF * variables.STIFFNESS_COEFF_SCALE;
+	DisplayPhysicsParams();
 
 	ImGui::Spacing(); ImGui::Spacing();
 
 	ImGui::End();
+}
+
+void ApplicationWindow::DisplayPhysicsParams() {
+	ImGui::Spacing(); ImGui::Spacing();
+	ImGui::Text("Physics parameters");
+
+	ImGui::PushItemWidth(100);
+	ImGui::DragScalar("Gravity", ImGuiDataType_Float,
+		&Config::G,
+		Config::G_STEP,
+		&Config::G_MIN,
+		&Config::G_MAX, "%f");
+
+	ImGui::DragScalar("Time step", ImGuiDataType_Float,
+		&Config::TIME_STEP,
+		Config::TIME_STEP_STEP,
+		&Config::TIME_STEP_MIN,
+		&Config::TIME_STEP_MAX, "%f");
+
+	ImGui::DragScalar("Smoothing radius", ImGuiDataType_Float,
+		&Config::SMOOTHING_RADIUS,
+		Config::SMOOTHING_RADIUS_STEP,
+		&Config::SMOOTHING_RADIUS_MIN,
+		&Config::SMOOTHING_RADIUS_MAX, "%f");
+
+	ImGui::DragScalar("Rest density", ImGuiDataType_Float,
+		&Config::REST_DENSITY,
+		Config::REST_DENSITY_STEP,
+		&Config::REST_DENSITY_MIN,
+		&Config::REST_DENSITY_MAX, "%f");
+
+	ImGui::DragScalar("Stiffness", ImGuiDataType_Float,
+		&Config::STIFFNESS_COEFF,
+		Config::STIFFNESS_COEFF_STEP,
+		&Config::STIFFNESS_COEFF_MIN,
+		&Config::STIFFNESS_COEFF_MAX, "%f");
+
+	ImGui::PopItemWidth();
 }
 
 void ApplicationWindow::DisplayInfoWidgets() {

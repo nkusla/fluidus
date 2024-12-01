@@ -29,26 +29,26 @@ void Simulator::Step() {
 	if (stopped)
 		return;
 
-	CalculateDensities();
-	CalculatePressureForces();
+	#pragma omp parallel for
+	for (auto &p : *particles) {
+		CalculateDensity(p);
+	}
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		p.acceleration += GRAVITY;
-		p.velocity += p.acceleration * Config::STEP;
-		p.position += p.velocity * Config::STEP;
+		glm::vec3 pressureForce = CalculatePressureForces(p);
+		p.velocity += pressureForce / p.density * Config::TIME_STEP;
+	}
+
+	#pragma omp parallel for
+	for (auto &p : *particles) {
+		p.velocity += GRAVITY * Config::TIME_STEP;
+		p.position += p.velocity * Config::TIME_STEP;
 
 		CheckWallCollision(p);
 	}
 
-	// float a = std::accumulate(particles->begin(), particles->end(), 0.0f,
-  //       [](float sum, const Particle& p) {
-  //           return sum + glm::length(p.velocity);
-  //       }) / static_cast<float>(particles->size());
-
-	// std::cout << "Average velocity: " << a << std::endl;
-
-	time += Config::STEP;
+	time += Config::TIME_STEP;
 }
 
 void Simulator::CheckWallCollision(Particle &p) {
@@ -94,44 +94,40 @@ void Simulator::CheckWallCollision(Particle &p) {
 	}
 }
 
-void Simulator::CalculateDensities() {
+void Simulator::CalculateDensity(Particle &p) {
+	p.density = 0.0f;
 
-	#pragma omp parallel for
-	for(auto &p1 : *particles) {
-		p1.density = 0.0f;
-		for(auto &p2 : *particles) {
-			if (&p1 == &p2)
-				continue;
+	for(auto &p2 : *particles) {
+		if(&p == &p2)
+			continue;
 
-			float distance = glm::distance(p1.position, p2.position);
-			p1.density += p2.mass * SpikyKernel(distance, Config::SMOOTHING_RADIUS);
-		}
+		float distance = glm::distance(p.position, p2.position);
+		p.density += p2.mass * SpikyKernel(distance, Config::SMOOTHING_RADIUS);
 	}
 }
 
-void Simulator::CalculatePressureForces() {
+glm::vec3 Simulator::CalculatePressureForces(const Particle &p) {
+	float pressure = LinearEOS(p);
+	glm::vec3 pressureForce = glm::vec3(0.0f);
 
-	#pragma omp parallel for
-	for(auto &p1 : *particles) {
-		float pressure1 = LinearEOS(p1);
-		glm::vec3 force = glm::vec3(0.0f);
+	for(auto &p2 : *particles) {
+		if (&p == &p2)
+			continue;
 
-		for(auto &p2 : *particles) {
-			if (&p1 == &p2)
-				continue;
+		float distance = glm::distance(p.position, p2.position);
+		if(distance == 0)
+			continue;
 
-			float pressure2 = LinearEOS(p2);
-			float distance = glm::distance(p1.position, p2.position);
-			if (distance == 0.0f || p1.density == 0.0f || p2.density == 0.0f)
-				continue;
+		float pressure2 = LinearEOS(p2);
 
-			glm::vec3 direction = glm::normalize(p1.position - p2.position);
-			float force = -p2.mass * (pressure1 + pressure2) / (2.0f * p2.density) * SpikyKernelDeriv(distance, Config::SMOOTHING_RADIUS);
-			p1.acceleration += force * direction / p1.density;
-		}
+		glm::vec3 direction = glm::normalize(p.position - p2.position);
+		float force = -p2.mass * (pressure + pressure2) / (2.0f * p2.density) * SpikyKernelDeriv(distance, Config::SMOOTHING_RADIUS);
+		pressureForce += force * direction;
 	}
+
+	return pressureForce;
 }
 
-inline float Simulator::LinearEOS(Particle &p) {
+inline float Simulator::LinearEOS(const Particle &p) {
 	return Config::STIFFNESS_COEFF * (p.density - Config::REST_DENSITY);
 }

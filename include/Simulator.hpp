@@ -28,10 +28,11 @@ class Simulator {
 		void Reset();
 		void Step();
 		void CheckWallCollision(Particle &p);
-		void CalculateDensities();
-		void CalculatePressureForces();
 
-		inline float LinearEOS(Particle &p);
+		void CalculateDensity(Particle &p);
+		glm::vec3 CalculatePressureForces(const Particle &p);
+
+		inline float LinearEOS(const Particle &p);
 };
 
 #endif // ENGINE_HPP

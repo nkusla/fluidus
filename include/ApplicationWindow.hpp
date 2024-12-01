@@ -15,24 +15,15 @@
 #include "Config.hpp"
 #include "Simulator.hpp"
 
-struct MenuVariables {
-	float G = 0.0f;
-	float G_SCALE = 1e-5f;
-	float STEP = 50.0f;
-	float STEP_SCALE = 1e-4f;
-	float STIFFNESS_COEFF = 1e2f;
-	float STIFFNESS_COEFF_SCALE = 1e-5f;
-};
-
 class ApplicationWindow {
 	private:
 		GLFWwindow* window = nullptr;
 		glm::vec2 screenSize;
+
 		double lastKeyPressTime = 0.0;
 		double lastFPSTime = 0.0;
 		int frameCount = 0;
 		float fps = 0.0f;
-		MenuVariables variables;
 
 		bool spacePressed = false;
 		bool HPressed = false;
@@ -52,6 +43,7 @@ class ApplicationWindow {
 		void ChecKeyPressed();
 		void DisplayAllWidgets();
 		void DisplayParametersWidgets();
+		void DisplayPhysicsParams();
 		void DisplayInfoWidgets();
 		void RunFrame();
 		void UpdateFPS();
