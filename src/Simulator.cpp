@@ -25,8 +25,8 @@ void Simulator::StartStop() {
 	stopped = !stopped;
 }
 
-void Simulator::Step() {
-	if (stopped)
+void Simulator::Step(bool nextStep) {
+	if (stopped && !nextStep)
 		return;
 
 	#pragma omp parallel for

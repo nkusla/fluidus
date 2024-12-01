@@ -119,25 +119,26 @@ void ApplicationWindow::ChecKeyPressed() {
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		if(!spacePressed) {
+		if(!StopPressed) {
 			simulator->StartStop();
-			spacePressed = true;
+			StopPressed = true;
 		}
 	}
 	else if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) {
-		spacePressed = false;
+		StopPressed = false;
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
-		if(!HPressed) {
+		if(!HidePressed) {
 			hideWidgets = !hideWidgets;
-			HPressed = true;
+			HidePressed = true;
 		}
 	}
 	else if(glfwGetKey(window, GLFW_KEY_H) == GLFW_RELEASE) {
-		HPressed = false;
+		HidePressed = false;
 	}
 
+	StepPressed = (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) ? true : false;
 }
 
 void ApplicationWindow::DisplayAllWidgets() {
@@ -250,7 +251,7 @@ void ApplicationWindow::RunFrame() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	DisplayAllWidgets();
 
-	simulator->Step();
+	simulator->Step(StepPressed);
 	renderer->Render();
 
 	glfwSwapBuffers(window);

@@ -26,7 +26,7 @@ class Simulator {
 
 		void StartStop();
 		void Reset();
-		void Step();
+		void Step(bool nextStep = false);
 		void CheckWallCollision(Particle &p);
 
 		void CalculateDensity(Particle &p);

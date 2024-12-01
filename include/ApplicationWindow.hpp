@@ -25,8 +25,9 @@ class ApplicationWindow {
 		int frameCount = 0;
 		float fps = 0.0f;
 
-		bool spacePressed = false;
-		bool HPressed = false;
+		bool StopPressed = false;
+		bool HidePressed = false;
+		bool StepPressed = false;
 		bool hideWidgets = false;
 
 		void InitImGui();
