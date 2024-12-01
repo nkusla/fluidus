@@ -210,10 +210,10 @@ void ApplicationWindow::DisplayPhysicsParams() {
 		&Config::REST_DENSITY_MAX, "%f");
 
 	ImGui::DragScalar("Stiffness", ImGuiDataType_Float,
-		&Config::STIFFNESS_COEFF,
-		Config::STIFFNESS_COEFF_STEP,
-		&Config::STIFFNESS_COEFF_MIN,
-		&Config::STIFFNESS_COEFF_MAX, "%f");
+		&Config::STIFFNESS,
+		Config::STIFFNESS_STEP,
+		&Config::STIFFNESS_MIN,
+		&Config::STIFFNESS_MAX, "%f");
 
 	ImGui::DragScalar("Viscosity", ImGuiDataType_Float,
 		&Config::VISCOSITY,

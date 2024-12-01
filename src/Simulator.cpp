@@ -148,7 +148,7 @@ glm::vec3 Simulator::CalculateViscosityForces(const Particle &p) {
 			continue;
 
 		float distance = glm::distance(p.position, p2.position);
-		if(p2.density == 0)
+		if(distance == 0 || p2.density == 0)
 			continue;
 
 		glm::vec3 relativeVelocity = p2.velocity - p.velocity;
@@ -159,5 +159,5 @@ glm::vec3 Simulator::CalculateViscosityForces(const Particle &p) {
 }
 
 inline float Simulator::LinearEOS(const Particle &p) {
-	return Config::STIFFNESS_COEFF * (p.density - Config::REST_DENSITY);
+	return Config::STIFFNESS * (p.density - Config::REST_DENSITY);
 }

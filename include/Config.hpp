@@ -43,10 +43,10 @@ class Config {
 		static float REST_DENSITY_MAX;
 		static float REST_DENSITY_STEP;
 
-		static float STIFFNESS_COEFF;
-		static float STIFFNESS_COEFF_MIN;
-		static float STIFFNESS_COEFF_MAX;
-		static float STIFFNESS_COEFF_STEP;
+		static float STIFFNESS;
+		static float STIFFNESS_MIN;
+		static float STIFFNESS_MAX;
+		static float STIFFNESS_STEP;
 
 		static float VISCOSITY;
 		static float VISCOSITY_MIN;

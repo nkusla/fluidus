@@ -2,7 +2,7 @@
 
 unsigned int Config::SEED = 1616;
 glm::vec3 Config::CONTAINER_DIMENSIONS = glm::vec3(1.0f, 1.0f, 1.0f);
-int Config::PARTICLE_COUNT = 500;
+int Config::PARTICLE_COUNT = 100;
 
 // Graphics parameters
 glm::vec2 Config::SCREEN_SIZE = glm::vec2(1366, 768);
@@ -32,12 +32,12 @@ float Config::REST_DENSITY_MIN = 1.0f;
 float Config::REST_DENSITY_MAX = 10.0f;
 float Config::REST_DENSITY_STEP = 0.1f;
 
-float Config::STIFFNESS_COEFF = 1.0f;
-float Config::STIFFNESS_COEFF_MIN = 0.1f;
-float Config::STIFFNESS_COEFF_MAX = 100.0f;
-float Config::STIFFNESS_COEFF_STEP = 0.1f;
+float Config::STIFFNESS = 1.0f;
+float Config::STIFFNESS_MIN = 0.0f;
+float Config::STIFFNESS_MAX = 25.0f;
+float Config::STIFFNESS_STEP = 0.1f;
 
 float Config::VISCOSITY = 1.0f;
 float Config::VISCOSITY_MIN = 0.0f;
-float Config::VISCOSITY_MAX = 50.0f;
+float Config::VISCOSITY_MAX = 25.0f;
 float Config::VISCOSITY_STEP = 0.1f;
