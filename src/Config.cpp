@@ -36,3 +36,8 @@ float Config::STIFFNESS_COEFF = 1.0f;
 float Config::STIFFNESS_COEFF_MIN = 0.1f;
 float Config::STIFFNESS_COEFF_MAX = 100.0f;
 float Config::STIFFNESS_COEFF_STEP = 0.1f;
+
+float Config::VISCOSITY = 1.0f;
+float Config::VISCOSITY_MIN = 0.0f;
+float Config::VISCOSITY_MAX = 50.0f;
+float Config::VISCOSITY_STEP = 0.1f;

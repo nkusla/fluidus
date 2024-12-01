@@ -36,8 +36,20 @@ void Simulator::Step() {
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
+		if (p.density == 0)
+			continue;
+
 		glm::vec3 pressureForce = CalculatePressureForces(p);
 		p.velocity += pressureForce / p.density * Config::TIME_STEP;
+	}
+
+	#pragma omp parallel for
+	for (auto &p : *particles) {
+		if (p.density == 0)
+			continue;
+
+		glm::vec3 viscosityForce = CalculateViscosityForces(p);
+		p.velocity += viscosityForce / p.density * Config::TIME_STEP;
 	}
 
 	#pragma omp parallel for
@@ -115,7 +127,7 @@ glm::vec3 Simulator::CalculatePressureForces(const Particle &p) {
 			continue;
 
 		float distance = glm::distance(p.position, p2.position);
-		if(distance == 0)
+		if(distance == 0 || p2.density == 0)
 			continue;
 
 		float pressure2 = LinearEOS(p2);
@@ -126,6 +138,24 @@ glm::vec3 Simulator::CalculatePressureForces(const Particle &p) {
 	}
 
 	return pressureForce;
+}
+
+glm::vec3 Simulator::CalculateViscosityForces(const Particle &p) {
+	glm::vec3 viscosityForce = glm::vec3(0.0f);
+
+	for(auto &p2 : *particles) {
+		if (&p == &p2)
+			continue;
+
+		float distance = glm::distance(p.position, p2.position);
+		if(p2.density == 0)
+			continue;
+
+		glm::vec3 relativeVelocity = p2.velocity - p.velocity;
+		viscosityForce += p2.mass * relativeVelocity / p2.density * ViscosityKernelLaplacian(distance, Config::SMOOTHING_RADIUS);
+	}
+
+	return viscosityForce * Config::VISCOSITY;
 }
 
 inline float Simulator::LinearEOS(const Particle &p) {

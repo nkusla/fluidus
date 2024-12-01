@@ -215,6 +215,12 @@ void ApplicationWindow::DisplayPhysicsParams() {
 		&Config::STIFFNESS_COEFF_MIN,
 		&Config::STIFFNESS_COEFF_MAX, "%f");
 
+	ImGui::DragScalar("Viscosity", ImGuiDataType_Float,
+		&Config::VISCOSITY,
+		Config::VISCOSITY_STEP,
+		&Config::VISCOSITY_MIN,
+		&Config::VISCOSITY_MAX, "%f");
+
 	ImGui::PopItemWidth();
 }
 
