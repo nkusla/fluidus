@@ -36,7 +36,7 @@ void Simulator::Step(bool nextStep) {
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		if (p.density == 0)
+		if (p.density == 0.0f)
 			continue;
 
 		glm::vec3 pressureForce = CalculatePressureForces(p);
@@ -45,7 +45,7 @@ void Simulator::Step(bool nextStep) {
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		if (p.density == 0)
+		if (p.density == 0.0f)
 			continue;
 
 		glm::vec3 viscosityForce = CalculateViscosityForces(p);
@@ -114,7 +114,7 @@ void Simulator::CalculateDensity(Particle &p) {
 			continue;
 
 		float distance = glm::distance(p.position, p2.position);
-		p.density += p2.mass * SpikyKernel(distance, Config::SMOOTHING_RADIUS);
+		p.density += p2.mass * Poly6Kernel(distance, Config::SMOOTHING_RADIUS);
 	}
 }
 
@@ -127,7 +127,7 @@ glm::vec3 Simulator::CalculatePressureForces(const Particle &p) {
 			continue;
 
 		float distance = glm::distance(p.position, p2.position);
-		if(distance == 0 || p2.density == 0)
+		if(distance == 0.0f || p2.density == 0.0f)
 			continue;
 
 		float pressure2 = LinearEOS(p2);
@@ -148,7 +148,7 @@ glm::vec3 Simulator::CalculateViscosityForces(const Particle &p) {
 			continue;
 
 		float distance = glm::distance(p.position, p2.position);
-		if(distance == 0 || p2.density == 0)
+		if(distance == 0.0f || p2.density == 0.0f)
 			continue;
 
 		glm::vec3 relativeVelocity = p2.velocity - p.velocity;
