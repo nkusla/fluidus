@@ -68,7 +68,6 @@ void Fluid::Render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 	glBindVertexArray(VAO);
-	glPointSize(5.0f);
 	glDrawArrays(GL_POINTS, 0, particles->size());
 	glBindVertexArray(0);
 
