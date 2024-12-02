@@ -10,10 +10,10 @@ float Config::ZOOM_FACTOR = 0.5f;
 float Config::ROTATION_ANGLE = 90.0f;
 
 // Physics parameters
-float Config::G = 0.01f;
+float Config::G = 0.1f;
 float Config::G_MIN = 0.0f;
-float Config::G_MAX = 20.0f;
-float Config::G_STEP = 1e-3f;
+float Config::G_MAX = 15.0f;
+float Config::G_STEP = 0.01f;
 
 float Config::TIME_STEP = 0.01f;
 float Config::TIME_STEP_MIN = 1e-4f;
@@ -25,11 +25,11 @@ float Config::DAMPING = 0.3f;
 float Config::SMOOTHING_RADIUS = 0.4f;
 float Config::SMOOTHING_RADIUS_MIN = 0.1f;
 float Config::SMOOTHING_RADIUS_MAX = 3.0f;
-float Config::SMOOTHING_RADIUS_STEP = 0.1f;
+float Config::SMOOTHING_RADIUS_STEP = 0.01f;
 
-float Config::REST_DENSITY = 5.0f;
+float Config::REST_DENSITY = 10.0f;
 float Config::REST_DENSITY_MIN = 1.0f;
-float Config::REST_DENSITY_MAX = 10.0f;
+float Config::REST_DENSITY_MAX = 20.0f;
 float Config::REST_DENSITY_STEP = 0.1f;
 
 float Config::STIFFNESS = 1.0f;

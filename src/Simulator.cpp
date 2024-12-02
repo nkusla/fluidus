@@ -31,39 +31,32 @@ void Simulator::Step(bool nextStep) {
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		CalculateDensity(p);
+		p.force = glm::vec3(0.0f);
+		p.density = CalculateDensity(p);
 	}
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
+		p.force += GRAVITY * p.density;
+
 		if (p.density == 0.0f)
 			continue;
 
-		glm::vec3 pressureForce = CalculatePressureForces(p);
-		p.velocity += pressureForce / p.density * Config::TIME_STEP;
+		p.force += CalculatePressureForces(p) + CalculateViscosityForces(p);
+		p.velocity += p.force / p.density * Config::TIME_STEP;
 	}
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		if (p.density == 0.0f)
-			continue;
-
-		glm::vec3 viscosityForce = CalculateViscosityForces(p);
-		p.velocity += viscosityForce / p.density * Config::TIME_STEP;
-	}
-
-	#pragma omp parallel for
-	for (auto &p : *particles) {
-		p.velocity += GRAVITY * Config::TIME_STEP;
 		p.position += p.velocity * Config::TIME_STEP;
 
-		CheckWallCollision(p);
+		CheckWallCollisions(p);
 	}
 
 	time += Config::TIME_STEP;
 }
 
-void Simulator::CheckWallCollision(Particle &p) {
+void Simulator::CheckWallCollisions(Particle &p) {
 	glm::vec3 dimensions = container->GetDimensions();
 	float lowerBoundY = -dimensions.y / 2.0f;
 	float upperBoundY = dimensions.y / 2.0f;
@@ -76,46 +69,48 @@ void Simulator::CheckWallCollision(Particle &p) {
 	if (p.position.y <= lowerBoundY) {
 		p.position.y = lowerBoundY;
 		p.velocity.y = -p.velocity.y * Config::DAMPING;
-		p.acceleration += GRAVITY;
+		//p.acceleration += GRAVITY;
 	} else if (p.position.y >= upperBoundY) {
 		p.position.y = upperBoundY;
 		p.velocity.y = -p.velocity.y * Config::DAMPING;
-		p.acceleration += GRAVITY;
+		//p.acceleration += GRAVITY;
 	}
 
 	// Check collision with X walls
 	if (p.position.x <= lowerBoundX) {
 		p.position.x = lowerBoundX;
 		p.velocity.x = -p.velocity.x * Config::DAMPING;
-		p.acceleration.x = 0.0f; // Reset other accelerations
+		//p.acceleration.x = 0.0f; // Reset other accelerations
 	} else if (p.position.x >= upperBoundX) {
 		p.position.x = upperBoundX;
 		p.velocity.x = -p.velocity.x * Config::DAMPING;
-		p.acceleration.x = 0.0f; // Reset other accelerations
+		//p.acceleration.x = 0.0f; // Reset other accelerations
 	}
 
 	// Check collision with Z walls
 	if (p.position.z <= lowerBoundZ) {
 		p.position.z = lowerBoundZ;
 		p.velocity.z = -p.velocity.z * Config::DAMPING;
-		p.acceleration.z = 0.0f; // Reset other accelerations
+		//p.acceleration.z = 0.0f; // Reset other accelerations
 	} else if (p.position.z >= upperBoundZ) {
 		p.position.z = upperBoundZ;
 		p.velocity.z = -p.velocity.z * Config::DAMPING;
-		p.acceleration.z = 0.0f; // Reset other accelerations
+		//p.acceleration.z = 0.0f; // Reset other accelerations
 	}
 }
 
-void Simulator::CalculateDensity(Particle &p) {
-	p.density = 0.0f;
+float Simulator::CalculateDensity(Particle &p) {
+	float density = 0.0f;
 
 	for(auto &p2 : *particles) {
 		if(&p == &p2)
 			continue;
 
 		float distance = glm::distance(p.position, p2.position);
-		p.density += p2.mass * Poly6Kernel(distance, Config::SMOOTHING_RADIUS);
+		density += p2.mass * Poly6Kernel(distance, Config::SMOOTHING_RADIUS);
 	}
+
+	return density;
 }
 
 glm::vec3 Simulator::CalculatePressureForces(const Particle &p) {

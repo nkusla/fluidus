@@ -8,6 +8,6 @@ uniform mat4 MVP;
 out vec4 fragColor;
 
 void main() {
-		fragColor = aColor;
-		gl_Position = MVP * vec4(aPos, 1.0);
+	fragColor = aColor;
+	gl_Position = MVP * vec4(aPos, 1.0);
 }

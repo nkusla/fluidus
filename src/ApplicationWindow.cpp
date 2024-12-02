@@ -165,8 +165,11 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	ImGui::SetWindowSize(ImVec2(250, 380));
 
 	ImGui::Text("Particles count: %ld", renderer->fluid->GetParticles()->size());
+
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Container dimensions");
+	ImGui::Spacing(); ImGui::Spacing();
+
 	bool widthChanged = ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
 	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
 	bool depthChanged = ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, 1.0f, 3.0f);
@@ -174,9 +177,14 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	if(widthChanged || heightChanged || depthChanged)
 		renderer->container->UpdateDimensions(Config::CONTAINER_DIMENSIONS);
 
-	DisplayPhysicsParams();
-
 	ImGui::Spacing(); ImGui::Spacing();
+	ImGui::DragScalar("Time step", ImGuiDataType_Float,
+		&Config::TIME_STEP,
+		Config::TIME_STEP_STEP,
+		&Config::TIME_STEP_MIN,
+		&Config::TIME_STEP_MAX, "%.4f");
+
+	DisplayPhysicsParams();
 
 	ImGui::End();
 }
@@ -184,43 +192,38 @@ void ApplicationWindow::DisplayParametersWidgets() {
 void ApplicationWindow::DisplayPhysicsParams() {
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Physics parameters");
+	ImGui::Spacing(); ImGui::Spacing();
 
 	ImGui::PushItemWidth(100);
 	ImGui::DragScalar("Gravity", ImGuiDataType_Float,
 		&Config::G,
 		Config::G_STEP,
 		&Config::G_MIN,
-		&Config::G_MAX, "%f");
-
-	ImGui::DragScalar("Time step", ImGuiDataType_Float,
-		&Config::TIME_STEP,
-		Config::TIME_STEP_STEP,
-		&Config::TIME_STEP_MIN,
-		&Config::TIME_STEP_MAX, "%f");
+		&Config::G_MAX, "%.2f");
 
 	ImGui::DragScalar("Smoothing radius", ImGuiDataType_Float,
 		&Config::SMOOTHING_RADIUS,
 		Config::SMOOTHING_RADIUS_STEP,
 		&Config::SMOOTHING_RADIUS_MIN,
-		&Config::SMOOTHING_RADIUS_MAX, "%f");
+		&Config::SMOOTHING_RADIUS_MAX, "%.2f");
 
 	ImGui::DragScalar("Rest density", ImGuiDataType_Float,
 		&Config::REST_DENSITY,
 		Config::REST_DENSITY_STEP,
 		&Config::REST_DENSITY_MIN,
-		&Config::REST_DENSITY_MAX, "%f");
+		&Config::REST_DENSITY_MAX, "%.1f");
 
 	ImGui::DragScalar("Stiffness", ImGuiDataType_Float,
 		&Config::STIFFNESS,
 		Config::STIFFNESS_STEP,
 		&Config::STIFFNESS_MIN,
-		&Config::STIFFNESS_MAX, "%f");
+		&Config::STIFFNESS_MAX, "%.1f");
 
 	ImGui::DragScalar("Viscosity", ImGuiDataType_Float,
 		&Config::VISCOSITY,
 		Config::VISCOSITY_STEP,
 		&Config::VISCOSITY_MIN,
-		&Config::VISCOSITY_MAX, "%f");
+		&Config::VISCOSITY_MAX, "%.1f");
 
 	ImGui::PopItemWidth();
 }

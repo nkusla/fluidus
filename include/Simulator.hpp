@@ -27,9 +27,9 @@ class Simulator {
 		void StartStop();
 		void Reset();
 		void Step(bool nextStep = false);
-		void CheckWallCollision(Particle &p);
+		void CheckWallCollisions(Particle &p);
 
-		void CalculateDensity(Particle &p);
+		float CalculateDensity(Particle &p);
 		glm::vec3 CalculatePressureForces(const Particle &p);
 		glm::vec3 CalculateViscosityForces(const Particle &p);
 

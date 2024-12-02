@@ -21,8 +21,8 @@ Fluid::Fluid() {
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, velocity));
 	glEnableVertexAttribArray(1);
 
-	// Acceleration attribute
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, acceleration));
+	// Force attribute
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, force));
 	glEnableVertexAttribArray(2);
 
 	// Mass attribute
@@ -51,7 +51,7 @@ void Fluid::GenerateRandParticles(int count) {
 		particle.position = glm::vec3(dis(gen), dis(gen), dis(gen));
 		//particle.velocity = glm::vec3(dis(gen), dis(gen), dis(gen));
 		particle.velocity = glm::vec3(0.0f);
-		particle.acceleration = glm::vec3(0.0f);
+		particle.force = glm::vec3(0.0f);
 		particle.mass = 1.0f;
 	}
 }
