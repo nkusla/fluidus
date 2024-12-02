@@ -85,13 +85,9 @@ void Container::Render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
-	GLuint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
-	GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
-
-	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glm::mat4 MVP = projection * view * model;
+	GLuint mvpLoc = glGetUniformLocation(shaderProgram, "MVP");
+	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);

@@ -59,13 +59,9 @@ void Fluid::GenerateRandParticles(int count) {
 void Fluid::Render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
 
-	GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
-	GLuint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
-	GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
-
-	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glm::mat4 MVP = projection * view * model;
+	GLuint mvpLoc = glGetUniformLocation(shaderProgram, "MVP");
+	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_POINTS, 0, particles->size());
