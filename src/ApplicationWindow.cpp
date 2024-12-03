@@ -184,6 +184,10 @@ void ApplicationWindow::DisplayParametersWidgets() {
 		&Config::TIME_STEP_MIN,
 		&Config::TIME_STEP_MAX, "%.4f");
 
+	ImGui::Spacing(); ImGui::Spacing();
+
+	ImGui::Checkbox("Enable external forces", &Config::ENABLE_EXTERNAL_FORCES);
+
 	DisplayPhysicsParams();
 
 	ImGui::End();

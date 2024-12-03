@@ -43,6 +43,9 @@ void Simulator::Step(bool nextStep) {
 			continue;
 
 		p.force += CalculatePressureForces(p) + CalculateViscosityForces(p);
+		if (Config::ENABLE_EXTERNAL_FORCES)
+			p.force += ExternalForces::WaveSide(p.position.x, time);
+
 		p.velocity += p.force / p.density * Config::TIME_STEP;
 	}
 

@@ -11,6 +11,7 @@
 #include "Config.hpp"
 #include "Container.hpp"
 #include "SmoothingKernels.hpp"
+#include "ExternalForces.hpp"
 
 class Simulator {
 	private:

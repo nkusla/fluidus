@@ -4,8 +4,9 @@ unsigned int Config::SEED = 1616;
 glm::vec3 Config::CONTAINER_DIMENSIONS = glm::vec3(1.0f, 1.0f, 1.0f);
 float Config::CONTAINER_DIMENSIONS_MIN = 1.0f;
 float Config::CONTAINER_DIMENSIONS_MAX = 10.0f;
+bool Config::ENABLE_EXTERNAL_FORCES = false;
 
-int Config::PARTICLE_COUNT = 150;
+int Config::PARTICLE_COUNT = 1000;
 
 // Graphics parameters
 glm::vec2 Config::SCREEN_SIZE = glm::vec2(1366, 768);

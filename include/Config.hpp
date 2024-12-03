@@ -15,6 +15,7 @@ class Config {
 		static glm::vec3 CONTAINER_DIMENSIONS;
 		static float CONTAINER_DIMENSIONS_MIN;
 		static float CONTAINER_DIMENSIONS_MAX;
+		static bool ENABLE_EXTERNAL_FORCES;
 
 		static int PARTICLE_COUNT;
 
