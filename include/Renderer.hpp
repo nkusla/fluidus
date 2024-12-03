@@ -23,7 +23,7 @@ class Renderer {
 
 		void RotateCamera(float angleOffset, glm::vec3 axis);
 		void ZoomCamera(float zoomOffset);
-		void InitCamera();
+		void CenterCamera();
 };
 
 #endif

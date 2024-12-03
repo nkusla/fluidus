@@ -97,7 +97,7 @@ void ApplicationWindow::ChecKeyPressed() {
 	float rotationAngle = Config::ROTATION_ANGLE * deltaTime;
 
 	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
-		renderer->InitCamera();
+		renderer->CenterCamera();
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
@@ -170,9 +170,9 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	ImGui::Text("Container dimensions");
 	ImGui::Spacing(); ImGui::Spacing();
 
-	bool widthChanged = ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, 1.0f, 3.0f);
-	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, 1.0f, 3.0f);
-	bool depthChanged = ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, 1.0f, 3.0f);
+	bool widthChanged = ImGui::SliderFloat("Width", &Config::CONTAINER_DIMENSIONS.x, Config::CONTAINER_DIMENSIONS_MIN, Config::CONTAINER_DIMENSIONS_MAX);
+	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, Config::CONTAINER_DIMENSIONS_MIN, Config::CONTAINER_DIMENSIONS_MAX);
+	bool depthChanged = ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, Config::CONTAINER_DIMENSIONS_MIN, Config::CONTAINER_DIMENSIONS_MAX);
 
 	if(widthChanged || heightChanged || depthChanged)
 		renderer->container->UpdateDimensions(Config::CONTAINER_DIMENSIONS);

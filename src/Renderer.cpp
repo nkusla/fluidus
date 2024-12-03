@@ -7,10 +7,6 @@ Renderer::Renderer(float aspectRatio) {
 		0.1f,														// Near clipping plane
 		200.0f);												// Far clipping plane
 
-	InitCamera();
-}
-
-void Renderer::InitCamera() {
 	view = glm::lookAt(
 		glm::vec3(0.0f, 0.0f, 3.0f),	// Camera position (eye)
 		glm::vec3(0.0f, 0.0f, 0.0f),	// Camera target
@@ -29,6 +25,18 @@ void Renderer::RotateCamera(float angleOffset, glm::vec3 axis) {
 void Renderer::ZoomCamera(float zoomOffset) {
 		glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, zoomOffset));
 		view = translation * view;
+}
+
+void Renderer::CenterCamera() {
+	glm::mat4 invView = glm::inverse(view);
+	glm::vec3 cameraPos = glm::vec3(invView[3]);
+	float cameraDistance = glm::length(cameraPos);
+
+	view = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, cameraDistance),	// Camera position (eye)
+		glm::vec3(0.0f, 0.0f, 0.0f),						// Camera target
+		glm::vec3(0.0f, 1.0f, 0.0f)							// Up vector
+	);
 }
 
 void Renderer::Render() {
