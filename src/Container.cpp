@@ -9,17 +9,15 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 
 	indices = {
 		// Front face
-		0, 1, 2, 2, 3, 0,
-		// Back face
-		4, 5, 6, 6, 7, 4,
+		0, 1, 2, 3,
 		// Left face
-		0, 4, 7, 7, 3, 0,
-		// Right face
-		1, 5, 6, 6, 2, 1,
+		0, 4, 7, 3,
 		// Top face
-		3, 2, 6, 6, 7, 3,
-		// Bottom face
-		0, 1, 5, 5, 4, 0
+		2, 6, 7,
+		// Back face
+		4, 5, 6,
+		// Right face
+		2, 1, 5, 6, 2, 1
 	};
 
 	glGenBuffers(1, &VBO);
@@ -55,16 +53,16 @@ void Container::DefineVerticies() {
 
 	vertices = {
 		// Front face
-		-width / 2, -height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		width / 2, -height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		width / 2,  height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		-width / 2,  height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
+		-width / 2, -height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
+		width / 2, -height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
+		width / 2,  height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
+		-width / 2,  height / 2, depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
 
 		// Back face
-		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f,
-		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 0.5f
+		-width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
+		width / 2, -height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
+		width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 1.0f,
+		-width / 2,  height / 2, -depth / 2, 1.0f, 1.0f, 1.0f, 1.0f
 	};
 }
 
@@ -83,17 +81,15 @@ void Container::UpdateDimensions(glm::vec3 newDimensions) {
 
 void Container::Render(const glm::mat4 &view, const glm::mat4 &projection) {
 	glUseProgram(shaderProgram);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glm::mat4 MVP = projection * view * model;
 	GLuint mvpLoc = glGetUniformLocation(shaderProgram, "MVP");
 	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_LINE_STRIP, sizeof(indices), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glUseProgram(0);
 }
 

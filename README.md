@@ -9,3 +9,4 @@
 - [ ] Sphere creation in geometry shader for Fluid particles
 - [ ] Implement better solver and fix instability
 - [ ] Space indexing for particles
+- [x] Use GL_QUADS (or something else) instead of GL_TRIANGLES for container rendering

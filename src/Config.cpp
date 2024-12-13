@@ -6,7 +6,7 @@ float Config::CONTAINER_DIMENSIONS_MIN = 1.0f;
 float Config::CONTAINER_DIMENSIONS_MAX = 10.0f;
 bool Config::ENABLE_EXTERNAL_FORCES = false;
 
-int Config::PARTICLE_COUNT = 1000;
+int Config::PARTICLE_COUNT = 150;
 
 // Graphics parameters
 glm::vec2 Config::SCREEN_SIZE = glm::vec2(1366, 768);
