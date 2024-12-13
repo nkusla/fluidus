@@ -27,9 +27,9 @@ float Config::TIME_STEP_STEP = 1e-4f;
 float Config::DAMPING = 0.3f;
 
 float Config::SMOOTHING_RADIUS = 0.4f;
-float Config::SMOOTHING_RADIUS_MIN = 0.1f;
-float Config::SMOOTHING_RADIUS_MAX = 3.0f;
-float Config::SMOOTHING_RADIUS_STEP = 0.01f;
+float Config::SMOOTHING_RADIUS_MIN = 0.2f;
+float Config::SMOOTHING_RADIUS_MAX = 1.0f;
+float Config::SMOOTHING_RADIUS_STEP = 1e-3f;
 
 float Config::REST_DENSITY = 20.0f;
 float Config::REST_DENSITY_MIN = 1.0f;

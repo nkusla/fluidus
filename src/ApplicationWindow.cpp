@@ -174,8 +174,9 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	bool heightChanged = ImGui::SliderFloat("Heigth", &Config::CONTAINER_DIMENSIONS.y, Config::CONTAINER_DIMENSIONS_MIN, Config::CONTAINER_DIMENSIONS_MAX);
 	bool depthChanged = ImGui::SliderFloat("Depth", &Config::CONTAINER_DIMENSIONS.z, Config::CONTAINER_DIMENSIONS_MIN, Config::CONTAINER_DIMENSIONS_MAX);
 
-	if(widthChanged || heightChanged || depthChanged)
+	if(widthChanged || heightChanged || depthChanged) {
 		renderer->container->UpdateDimensions(Config::CONTAINER_DIMENSIONS);
+	}
 
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::DragScalar("Time step", ImGuiDataType_Float,
@@ -209,7 +210,7 @@ void ApplicationWindow::DisplayPhysicsParams() {
 		&Config::SMOOTHING_RADIUS,
 		Config::SMOOTHING_RADIUS_STEP,
 		&Config::SMOOTHING_RADIUS_MIN,
-		&Config::SMOOTHING_RADIUS_MAX, "%.2f");
+		&Config::SMOOTHING_RADIUS_MAX, "%.3f");
 
 	ImGui::DragScalar("Rest density", ImGuiDataType_Float,
 		&Config::REST_DENSITY,

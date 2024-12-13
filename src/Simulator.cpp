@@ -32,6 +32,7 @@ void Simulator::Step(bool nextStep) {
 	#pragma omp parallel for
 	for (auto &p : *particles) {
 		p.force = glm::vec3(0.0f);
+		p.position += p.velocity * Config::TIME_STEP / 2.0f; // half-step position
 		p.density = CalculateDensity(p);
 	}
 
@@ -39,19 +40,20 @@ void Simulator::Step(bool nextStep) {
 	for (auto &p : *particles) {
 		p.force += GRAVITY * p.density;
 
+		if (Config::ENABLE_EXTERNAL_FORCES) {
+			p.force += ExternalForces::WaveSide(p.position.x, time);
+		}
+
 		if (p.density == 0.0f)
 			continue;
 
 		p.force += CalculatePressureForces(p) + CalculateViscosityForces(p);
-		if (Config::ENABLE_EXTERNAL_FORCES)
-			p.force += ExternalForces::WaveSide(p.position.x, time);
-
 		p.velocity += p.force / p.density * Config::TIME_STEP;
 	}
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		p.position += p.velocity * Config::TIME_STEP;
+		p.position += p.velocity * Config::TIME_STEP / 2.0f; // full-step position
 
 		CheckWallCollisions(p);
 	}
