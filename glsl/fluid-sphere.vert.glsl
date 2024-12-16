@@ -9,5 +9,4 @@ out float velocityMagnitude;
 void main() {
 	velocityMagnitude = length(velocity);
 	gl_Position = MVP * vec4(position, 1.0);
-	gl_PointSize = 5.0;
 }

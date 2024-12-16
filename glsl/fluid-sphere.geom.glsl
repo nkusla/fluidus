@@ -7,12 +7,14 @@ layout(points) in;
 layout(points, max_vertices = 32) out;
 
 uniform mat4 MVP;
-out float property;
+in float velocityMagnitude[];
+out float geomVelocityMagnitude;
 
 void main() {
-	vec4 center = gl_in[0].gl_Position;
-	gl_PointSize = 15.0;
-	gl_Position = projection * view * center;
+	geomVelocityMagnitude = velocityMagnitude[0];
+
+	gl_Position = gl_in[0].gl_Position;
+	gl_PointSize = 20.0;
 	EmitVertex();
 	EndPrimitive();
 }

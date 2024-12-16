@@ -80,6 +80,17 @@ ApplicationWindow::~ApplicationWindow() {
 
 GLFWwindow* ApplicationWindow::GetWindow() { return window; }
 
+void ApplicationWindow::SetRenderer(std::shared_ptr<Renderer> renderer) {
+	this->renderer = renderer;
+
+	fluidShaders = renderer->fluid->GetShaderProgramNames();
+	selectedFluidShader = 1;
+}
+
+void ApplicationWindow::SetSimulator(std::shared_ptr<Simulator> simulator) {
+	this->simulator = simulator;
+}
+
 void ApplicationWindow::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	ApplicationWindow* appWindow = static_cast<ApplicationWindow*>(glfwGetWindowUserPointer(window));
 	appWindow->renderer->ZoomCamera(yoffset * Config::ZOOM_FACTOR);
@@ -189,7 +200,6 @@ void ApplicationWindow::DisplayParametersWidgets() {
 	ImGui::Spacing(); ImGui::Spacing();
 
 	ImGui::Text("Fluid shaders");
-	fluidShaders = renderer->fluid->GetShaderProgramNames();
 	bool fluidShaderChanged = ImGui::Combo(" ", &selectedFluidShader, fluidShaders.data(), fluidShaders.size());
 	if(fluidShaderChanged) {
 		renderer->fluid->SelectShaderProgram(fluidShaders[selectedFluidShader]);

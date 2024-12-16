@@ -29,6 +29,12 @@ Fluid::Fluid() {
 		"../glsl/fluid-point.frag.glsl"
 	);
 
+	shaderPrograms["Sphere"] = ShaderLoader::LoadShaders(
+		"../glsl/fluid-sphere.vert.glsl",
+		"../glsl/fluid-sphere.frag.glsl",
+		"../glsl/fluid-sphere.geom.glsl"
+	);
+
 	SelectShaderProgram("Point");
 }
 

@@ -18,8 +18,8 @@ int main() {
 	renderer->container = container;
 	renderer->fluid = fluid;
 
-	appWindow.renderer = renderer;
-	appWindow.simulator = simulator;
+	appWindow.SetRenderer(renderer);
+	appWindow.SetSimulator(simulator);
 
 	while(appWindow.CheckClose()) {
 		appWindow.ChecKeyPressed();

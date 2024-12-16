@@ -19,6 +19,7 @@ class ApplicationWindow {
 	private:
 		GLFWwindow* window = nullptr;
 		glm::vec2 screenSize;
+		std::shared_ptr<Renderer> renderer = nullptr;
 
 		double lastKeyPressTime = 0.0;
 		double lastFPSTime = 0.0;
@@ -35,13 +36,15 @@ class ApplicationWindow {
 
 		void InitImGui();
 	public:
-		std::shared_ptr<Renderer> renderer = nullptr;
 		std::shared_ptr<Simulator> simulator = nullptr;
 
 		ApplicationWindow(glm::vec2 screenSize);
 		~ApplicationWindow();
 
 		GLFWwindow* GetWindow();
+
+		void SetRenderer(std::shared_ptr<Renderer> renderer);
+		void SetSimulator(std::shared_ptr<Simulator> simulator);
 
 		bool CheckClose();
 		void ChecKeyPressed();
