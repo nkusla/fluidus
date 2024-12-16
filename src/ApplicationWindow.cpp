@@ -39,6 +39,7 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
 
 	glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	InitImGui();
@@ -162,7 +163,7 @@ void ApplicationWindow::DisplayParametersWidgets() {
 		| ImGuiWindowFlags_NoResize);
 
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, 0));
-	ImGui::SetWindowSize(ImVec2(250, 380));
+	ImGui::SetWindowSize(ImVec2(250, 420));
 
 	ImGui::Text("Particles count: %ld", renderer->fluid->GetParticles()->size());
 
@@ -184,6 +185,15 @@ void ApplicationWindow::DisplayParametersWidgets() {
 		Config::TIME_STEP_STEP,
 		&Config::TIME_STEP_MIN,
 		&Config::TIME_STEP_MAX, "%.4f");
+
+	ImGui::Spacing(); ImGui::Spacing();
+
+	ImGui::Text("Fluid shaders");
+	fluidShaders = renderer->fluid->GetShaderProgramNames();
+	bool fluidShaderChanged = ImGui::Combo(" ", &selectedFluidShader, fluidShaders.data(), fluidShaders.size());
+	if(fluidShaderChanged) {
+		renderer->fluid->SelectShaderProgram(fluidShaders[selectedFluidShader]);
+	}
 
 	ImGui::Spacing(); ImGui::Spacing();
 

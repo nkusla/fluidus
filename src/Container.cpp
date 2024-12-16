@@ -40,7 +40,7 @@ Container::Container(glm::vec3 dimensions) : dimensions(dimensions) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	shaderProgram = ShaderLoader::LoadShaders(
+	selectedProgram = ShaderLoader::LoadShaders(
 		"../glsl/container.vert.glsl",
 		"../glsl/container.frag.glsl"
 	);
@@ -80,10 +80,10 @@ void Container::UpdateDimensions(glm::vec3 newDimensions) {
 }
 
 void Container::Render(const glm::mat4 &view, const glm::mat4 &projection) {
-	glUseProgram(shaderProgram);
+	glUseProgram(selectedProgram);
 
 	glm::mat4 MVP = projection * view * model;
-	GLuint mvpLoc = glGetUniformLocation(shaderProgram, "MVP");
+	GLuint mvpLoc = glGetUniformLocation(selectedProgram, "MVP");
 	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
 	glBindVertexArray(VAO);

@@ -21,22 +21,15 @@ Fluid::Fluid() {
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, velocity));
 	glEnableVertexAttribArray(1);
 
-	// Force attribute
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, force));
-	glEnableVertexAttribArray(2);
-
-	// Mass attribute
-	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, mass));
-	glEnableVertexAttribArray(3);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	shaderProgram = ShaderLoader::LoadShaders(
-		"../glsl/fluid.vert.glsl",
-		"../glsl/fluid.frag.glsl"
-		// "../glsl/fluid.geom.glsl"
+	shaderPrograms["Point"] = ShaderLoader::LoadShaders(
+		"../glsl/fluid-point.vert.glsl",
+		"../glsl/fluid-point.frag.glsl"
 	);
+
+	SelectShaderProgram("Point");
 }
 
 std::shared_ptr<std::vector<Particle>> Fluid::GetParticles() {
@@ -57,10 +50,10 @@ void Fluid::GenerateRandParticles(int count) {
 }
 
 void Fluid::Render(const glm::mat4 &view, const glm::mat4 &projection) {
-	glUseProgram(shaderProgram);
+	glUseProgram(selectedProgram);
 
 	glm::mat4 MVP = projection * view * model;
-	GLuint mvpLoc = glGetUniformLocation(shaderProgram, "MVP");
+	GLuint mvpLoc = glGetUniformLocation(selectedProgram, "MVP");
 	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(MVP));
 
 	glBindVertexArray(VAO);

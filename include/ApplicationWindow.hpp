@@ -30,6 +30,9 @@ class ApplicationWindow {
 		bool StepPressed = false;
 		bool hideWidgets = false;
 
+		std::vector<const char*> fluidShaders;
+		int selectedFluidShader = 0;
+
 		void InitImGui();
 	public:
 		std::shared_ptr<Renderer> renderer = nullptr;
