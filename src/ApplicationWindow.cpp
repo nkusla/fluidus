@@ -107,14 +107,10 @@ void ApplicationWindow::MouseButtonCallback(GLFWwindow* window, int button, int 
 		return;
 	}
 
-	if (button != GLFW_MOUSE_BUTTON_LEFT && action != GLFW_PRESS)
-		return;
-
-	glm::vec3 intersection = appWindow->renderer->CastRay(
-		appWindow->mousePos,
-		appWindow->screenSize
-	);
-
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+		appWindow->mousePressed = true;
+	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+		appWindow->mousePressed = false;
 }
 
 void ApplicationWindow::CursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
@@ -307,6 +303,12 @@ void ApplicationWindow::RunFrame() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	DisplayAllWidgets();
+
+	if (mousePressed) {
+		glm::vec3 intersection = renderer->CastRay(mousePos, screenSize);
+		if (intersection != NO_POINT)
+			simulator->ApplyRaycastForce(intersection);
+	}
 
 	simulator->Step(StepPressed);
 	renderer->Render();

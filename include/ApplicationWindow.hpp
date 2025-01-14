@@ -32,6 +32,7 @@ class ApplicationWindow {
 		bool HidePressed = false;
 		bool StepPressed = false;
 		bool hideWidgets = false;
+		bool mousePressed = false;
 
 		std::vector<const char*> fluidShaders;
 		int selectedFluidShader = 0;

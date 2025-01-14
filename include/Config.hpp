@@ -20,8 +20,8 @@ class Config {
 
 		static int PARTICLE_COUNT;
 
-		static float RAY_CAST_RADIUS;
-		static float RAY_CAST_FORCE;
+		static float RAYCAST_RADIUS;
+		static float RAYCAST_FORCE;
 
 		// Graphics parameters
 		static glm::vec2 SCREEN_SIZE;

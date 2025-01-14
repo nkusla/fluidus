@@ -31,7 +31,6 @@ void Simulator::Step(bool nextStep) {
 
 	#pragma omp parallel for
 	for (auto &p : *particles) {
-		p.force = glm::vec3(0.0f);
 		p.position += p.velocity * Config::TIME_STEP / 2.0f; // half-step position
 		p.density = CalculateDensity(p);
 	}
@@ -56,6 +55,7 @@ void Simulator::Step(bool nextStep) {
 		p.position += p.velocity * Config::TIME_STEP / 2.0f; // full-step position
 
 		CheckWallCollisions(p);
+		p.force = glm::vec3(0.0f); // Reset forces
 	}
 
 	time += Config::TIME_STEP;
@@ -101,6 +101,19 @@ void Simulator::CheckWallCollisions(Particle &p) {
 		p.position.z = upperBoundZ;
 		p.velocity.z = -p.velocity.z * Config::DAMPING;
 		//p.acceleration.z = 0.0f; // Reset other accelerations
+	}
+}
+
+void Simulator::ApplyRaycastForce(glm::vec3 intersection) {
+
+	#pragma omp parallel for
+	for(auto &p : *particles) {
+		float distance = glm::distance(p.position, intersection);
+		if(distance > Config::RAYCAST_RADIUS)
+			continue;
+
+		glm::vec3 direction = glm::normalize(p.position - intersection);
+		p.force += Config::RAYCAST_FORCE * direction;
 	}
 }
 

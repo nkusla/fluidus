@@ -29,6 +29,7 @@ class Simulator {
 		void Reset();
 		void Step(bool nextStep = false);
 		void CheckWallCollisions(Particle &p);
+		void ApplyRaycastForce(glm::vec3 intersection);
 
 		float CalculateDensity(Particle &p);
 		glm::vec3 CalculatePressureForces(const Particle &p);

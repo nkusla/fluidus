@@ -6,10 +6,10 @@ float Config::CONTAINER_DIMENSIONS_MIN = 1.0f;
 float Config::CONTAINER_DIMENSIONS_MAX = 10.0f;
 bool Config::ENABLE_EXTERNAL_FORCES = false;
 
-int Config::PARTICLE_COUNT = 150;
+int Config::PARTICLE_COUNT = 800;
 
-float Config::RAY_CAST_RADIUS = 0.1f;
-float Config::RAY_CAST_FORCE = 0.1f;
+float Config::RAYCAST_RADIUS = 0.5f;
+float Config::RAYCAST_FORCE = 5e3f;
 
 // Graphics parameters
 glm::vec2 Config::SCREEN_SIZE = glm::vec2(1366, 768);
