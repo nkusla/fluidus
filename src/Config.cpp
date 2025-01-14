@@ -8,10 +8,14 @@ bool Config::ENABLE_EXTERNAL_FORCES = false;
 
 int Config::PARTICLE_COUNT = 150;
 
+float Config::RAY_CAST_RADIUS = 0.1f;
+float Config::RAY_CAST_FORCE = 0.1f;
+
 // Graphics parameters
 glm::vec2 Config::SCREEN_SIZE = glm::vec2(1366, 768);
 float Config::ZOOM_FACTOR = 0.5f;
 float Config::ROTATION_ANGLE = 90.0f;
+glm::vec3 Config::DEFAULT_CAMERA_POS = glm::vec3(0.0f, 0.0f, 3.0f);
 
 // Physics parameters
 float Config::G = 0.1f;

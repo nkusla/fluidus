@@ -13,7 +13,7 @@ class Renderer {
 	private:
 		glm::mat4 projection;
 		glm::mat4 view;
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+		glm::vec3 cameraPos = Config::DEFAULT_CAMERA_POS;
 
 	public:
 		std::shared_ptr<Container> container = nullptr;

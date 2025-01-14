@@ -32,6 +32,7 @@ void Renderer::ZoomCamera(float zoomOffset) {
 
 void Renderer::CenterCamera() {
 
+	cameraPos = Config::DEFAULT_CAMERA_POS;
 	view = glm::lookAt(
 		cameraPos,															// Camera position (eye)
 		glm::vec3(0.0f, 0.0f, 0.0f),						// Camera target
@@ -72,7 +73,7 @@ glm::vec3 Renderer::CastRay(glm::vec2 mousePos, glm::vec2 screenSize) {
   float tFar = glm::min(glm::min(tMax.x, tMax.y), tMax.z);
 
 	if (tNear > tFar || tFar < 0)
-		return glm::vec3(0.0f);
+		return glm::vec3(INFINITY);
 
   return tNear * rayDir + rayOrigin;
 }

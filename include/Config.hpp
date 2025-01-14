@@ -8,6 +8,7 @@
 #define Z_AXIS glm::vec3(0.0f, 0.0f, 1.0f)
 #define ORIGIN glm::vec3(0.0f, 0.0f, 0.0f)
 #define GRAVITY glm::vec3(0.0f, -Config::G, 0.0f)
+#define NO_POINT glm::vec3(INFINITY)
 
 class Config {
 	public:
@@ -19,10 +20,14 @@ class Config {
 
 		static int PARTICLE_COUNT;
 
+		static float RAY_CAST_RADIUS;
+		static float RAY_CAST_FORCE;
+
 		// Graphics parameters
 		static glm::vec2 SCREEN_SIZE;
 		static float ZOOM_FACTOR;
 		static float ROTATION_ANGLE;
+		static glm::vec3 DEFAULT_CAMERA_POS;
 
 		// Physics parameters
 		static float G;
