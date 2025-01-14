@@ -26,12 +26,11 @@ void Renderer::RotateCamera(float angleOffset, glm::vec3 axis) {
 }
 
 void Renderer::ZoomCamera(float zoomOffset) {
-		glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, zoomOffset));
-		view = translation * view;
+	glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, zoomOffset));
+	view = translation * view;
 }
 
 void Renderer::CenterCamera() {
-
 	cameraPos = Config::DEFAULT_CAMERA_POS;
 	view = glm::lookAt(
 		cameraPos,															// Camera position (eye)

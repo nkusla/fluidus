@@ -19,6 +19,9 @@ class Config {
 		static bool ENABLE_EXTERNAL_FORCES;
 
 		static int PARTICLE_COUNT;
+		static int PARTICLE_COUNT_MIN;
+		static int PARTICLE_COUNT_MAX;
+		static int PARTICLE_COUNT_STEP;
 
 		static float RAYCAST_RADIUS;
 		static float RAYCAST_FORCE;
@@ -41,6 +44,9 @@ class Config {
 		static float TIME_STEP_STEP;
 
 		static float DAMPING;
+		static float DAMPING_MIN;
+		static float DAMPING_MAX;
+		static float DAMPING_STEP;
 
 		static float SMOOTHING_RADIUS;
 		static float SMOOTHING_RADIUS_MIN;

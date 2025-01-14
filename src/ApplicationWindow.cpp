@@ -199,9 +199,13 @@ void ApplicationWindow::DisplayParametersWidgets() {
 		| ImGuiWindowFlags_NoResize);
 
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 250, 0));
-	ImGui::SetWindowSize(ImVec2(250, 420));
+	ImGui::SetWindowSize(ImVec2(250, 450));
 
-	ImGui::Text("Particles count: %ld", renderer->fluid->GetParticles()->size());
+	ImGui::DragInt("Particles",
+		&Config::PARTICLE_COUNT,
+		Config::PARTICLE_COUNT_STEP,
+		Config::PARTICLE_COUNT_MIN,
+		Config::PARTICLE_COUNT_MAX);
 
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Container dimensions");
@@ -256,6 +260,12 @@ void ApplicationWindow::DisplayPhysicsParams() {
 		Config::SMOOTHING_RADIUS_STEP,
 		&Config::SMOOTHING_RADIUS_MIN,
 		&Config::SMOOTHING_RADIUS_MAX, "%.3f");
+
+	ImGui::DragScalar("Damping", ImGuiDataType_Float,
+		&Config::DAMPING,
+		Config::DAMPING_STEP,
+		&Config::DAMPING_MIN,
+		&Config::DAMPING_MAX, "%.2f");
 
 	ImGui::DragScalar("Rest density", ImGuiDataType_Float,
 		&Config::REST_DENSITY,
