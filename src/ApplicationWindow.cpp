@@ -44,9 +44,11 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
 
 	InitImGui();
 
+	glfwSetWindowUserPointer(window, static_cast<void*>(this));
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 	glfwSetScrollCallback(window, ScrollCallback);
-	glfwSetWindowUserPointer(window, static_cast<void*>(this));
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetCursorPosCallback(window, CursorPosCallback);
 
 	#ifdef DEBUG
 		PrintOpenGLInfo();
@@ -94,6 +96,33 @@ void ApplicationWindow::SetSimulator(std::shared_ptr<Simulator> simulator) {
 void ApplicationWindow::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	ApplicationWindow* appWindow = static_cast<ApplicationWindow*>(glfwGetWindowUserPointer(window));
 	appWindow->renderer->ZoomCamera(yoffset * Config::ZOOM_FACTOR);
+}
+
+void ApplicationWindow::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+	ApplicationWindow* appWindow = static_cast<ApplicationWindow*>(glfwGetWindowUserPointer(window));
+
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.WantCaptureMouse) {
+		ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+		return;
+	}
+
+	if (button != GLFW_MOUSE_BUTTON_LEFT && action != GLFW_PRESS)
+		return;
+
+	glm::vec3 intersection = appWindow->renderer->CastRay(
+		appWindow->mousePos,
+		appWindow->screenSize
+	);
+
+}
+
+void ApplicationWindow::CursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
+    ImGuiIO& io = ImGui::GetIO();
+		io.MousePos = ImVec2(xpos, ypos);
+
+		ApplicationWindow* appWindow = static_cast<ApplicationWindow*>(glfwGetWindowUserPointer(window));
+		appWindow->mousePos = glm::vec2(xpos, ypos);
 }
 
 bool ApplicationWindow::CheckClose() {

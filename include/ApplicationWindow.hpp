@@ -21,6 +21,8 @@ class ApplicationWindow {
 		glm::vec2 screenSize;
 		std::shared_ptr<Renderer> renderer = nullptr;
 
+		glm::vec2 mousePos = glm::vec2(0.0f);
+
 		double lastKeyPressTime = 0.0;
 		double lastFPSTime = 0.0;
 		int frameCount = 0;
@@ -57,6 +59,8 @@ class ApplicationWindow {
 		void PrintOpenGLInfo();
 
 		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+		static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+		static void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 };
 
 #endif
