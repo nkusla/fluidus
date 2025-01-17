@@ -55,3 +55,9 @@ float Config::VISCOSITY = 1.0f;
 float Config::VISCOSITY_MIN = 0.0f;
 float Config::VISCOSITY_MAX = 30.0f;
 float Config::VISCOSITY_STEP = 0.1f;
+
+float Config::SURFACE_TENSION = 0.1f;
+// float Config::SURFACE_TENSION_MIN;
+// float Config::SURFACE_TENSION_MAX;
+// float Config::SURFACE_TENSION_STEP;
+float Config::SURFACE_TENSION_THRESHOLD = 5.0f;

@@ -46,7 +46,10 @@ void Simulator::Step(bool nextStep) {
 		if (p.density == 0.0f)
 			continue;
 
-		p.force += CalculatePressureForces(p) + CalculateViscosityForces(p);
+		p.force += CalculatePressureForces(p);
+		p.force += CalculateViscosityForces(p);
+		// p.force += CalculateSurfaceTensionForces(p); NEEDS TO BE TESTED AND FIXED
+
 		p.velocity += p.force / p.density * Config::TIME_STEP;
 	}
 
@@ -169,6 +172,31 @@ glm::vec3 Simulator::CalculateViscosityForces(const Particle &p) {
 	}
 
 	return viscosityForce * Config::VISCOSITY;
+}
+
+glm::vec3 Simulator::CalculateSurfaceTensionForces(const Particle &p) {
+	glm::vec3 surfaceNormal = glm::vec3(0.0f);
+	float colorFieldLaplacian = 0.0f;
+
+	for(auto &p2 : *particles) {
+		if (&p == &p2)
+			continue;
+
+		float distance = glm::distance(p.position, p2.position);
+		if(distance == 0.0f || p2.density == 0.0f)
+			continue;
+
+		glm::vec3 normalDirection = glm::normalize(p.position - p2.position);
+		surfaceNormal += Poly6KernelDeriv(distance, Config::SMOOTHING_RADIUS) * normalDirection;
+		colorFieldLaplacian += Poly6KernelLaplacian(distance, Config::SMOOTHING_RADIUS);
+	}
+
+	float surfaceNormalMagnitude = glm::length(surfaceNormal);
+
+	if (surfaceNormalMagnitude <= Config::SURFACE_TENSION_THRESHOLD)
+		return glm::vec3(0.0f);
+
+	return -Config::SURFACE_TENSION * colorFieldLaplacian * surfaceNormal / surfaceNormalMagnitude;
 }
 
 inline float Simulator::LinearEOS(const Particle &p) {

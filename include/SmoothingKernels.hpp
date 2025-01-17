@@ -11,6 +11,22 @@ inline float Poly6Kernel(float r, float h) {
 	return std::pow(h * h - r * r, 3) * norm;
 }
 
+inline float Poly6KernelDeriv(float r, float h) {
+	if (r > h)
+		return 0.0f;
+
+	float norm = -945.0f / (32.0f * M_PI * std::pow(h, 9));
+	return r * (h * h - r * r) * (h * h - r * r) * norm;
+}
+
+inline float Poly6KernelLaplacian(float r, float h) {
+	if (r > h)
+		return 0.0f;
+
+	float norm = 945.0f / (32.0f * M_PI * std::pow(h, 9));
+	return (h * h - r * r) * (3.0f * (h * h - r * r) - 4.0f * r * r) * norm;
+}
+
 inline float SpikyKernel(float r, float h) {
 	if (r > h)
 		return 0.0f;

@@ -67,6 +67,12 @@ class Config {
 		static float VISCOSITY_MIN;
 		static float VISCOSITY_MAX;
 		static float VISCOSITY_STEP;
+
+		static float SURFACE_TENSION;
+		// static float SURFACE_TENSION_MIN;
+		// static float SURFACE_TENSION_MAX;
+		// static float SURFACE_TENSION_STEP;
+		static float SURFACE_TENSION_THRESHOLD;
 };
 
 #endif
