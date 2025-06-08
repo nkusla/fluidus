@@ -56,8 +56,8 @@ class ApplicationWindow {
 		void DisplayParametersWidgets();
 		void DisplayPhysicsParams();
 		void DisplayInfoWidgets();
+		void DisplayAuthorWidget();
 		void RunFrame();
-		void UpdateFPS();
 		void PrintOpenGLInfo();
 
 		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);

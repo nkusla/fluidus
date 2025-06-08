@@ -188,6 +188,7 @@ void ApplicationWindow::DisplayAllWidgets() {
 
 	DisplayParametersWidgets();
 	DisplayInfoWidgets();
+	DisplayAuthorWidget();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -303,6 +304,24 @@ void ApplicationWindow::DisplayInfoWidgets() {
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Time: %.2f", simulator->GetTime());
 	ImGui::Spacing(); ImGui::Spacing();
+
+	ImGui::End();
+}
+
+void ApplicationWindow::DisplayAuthorWidget() {
+	ImGui::Begin("Author", nullptr,
+		ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoCollapse
+		| ImGuiWindowFlags_NoTitleBar
+		| ImGuiWindowFlags_NoBackground);
+
+	ImGui::SetWindowPos(ImVec2(10, screenSize.y - 70));
+	ImGui::SetWindowSize(ImVec2(300, 70));
+
+	ImGui::Text("Author: Nikola Kuslakovic RA 8/2021");
+	ImGui::Spacing(); ImGui::Spacing();
+	ImGui::Text("GitHub: github.com/nkusla/fluidus");
 
 	ImGui::End();
 }

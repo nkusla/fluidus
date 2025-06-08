@@ -16,7 +16,7 @@ float Config::RAYCAST_RADIUS = 0.7f;
 float Config::RAYCAST_FORCE = 5e3f;
 
 // Graphics parameters
-glm::vec2 Config::SCREEN_SIZE = glm::vec2(1366, 768);
+glm::vec2 Config::SCREEN_SIZE = glm::vec2(1600, 900);
 float Config::ZOOM_FACTOR = 0.5f;
 float Config::ROTATION_ANGLE = 90.0f;
 glm::vec3 Config::DEFAULT_CAMERA_POS = glm::vec3(0.0f, 0.0f, 3.0f);
