@@ -10,10 +10,13 @@
 
 #include <iostream>
 #include <iomanip>
+#include <chrono>
+#include <thread>
 #include <memory>
 #include "Renderer.hpp"
 #include "Config.hpp"
 #include "Simulator.hpp"
+#include "FPSCounter.hpp"
 
 class ApplicationWindow {
 	private:
@@ -23,11 +26,9 @@ class ApplicationWindow {
 
 		glm::vec2 mousePos = glm::vec2(0.0f);
 
-		double lastKeyPressTime = 0.0;
-		double lastFPSTime = 0.0;
-		int frameCount = 0;
-		float fps = 0.0f;
+		FPSCounter fpsCounter;
 
+		double lastKeyPressTime = 0.0;
 		bool StopPressed = false;
 		bool HidePressed = false;
 		bool StepPressed = false;

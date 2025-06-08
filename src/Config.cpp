@@ -1,5 +1,6 @@
 #include "../include/Config.hpp"
 
+float Config::TARGET_FPS = 60.0f;
 unsigned int Config::SEED = 1616;
 glm::vec3 Config::CONTAINER_DIMENSIONS = glm::vec3(1.0f, 1.0f, 1.0f);
 float Config::CONTAINER_DIMENSIONS_MIN = 1.0f;

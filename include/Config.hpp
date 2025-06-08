@@ -12,6 +12,7 @@
 
 class Config {
 	public:
+		static float TARGET_FPS;
 		static unsigned int SEED;
 		static glm::vec3 CONTAINER_DIMENSIONS;
 		static float CONTAINER_DIMENSIONS_MIN;

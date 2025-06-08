@@ -1,6 +1,6 @@
 #include "../include/ApplicationWindow.hpp"
 
-ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSize) {
+ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSize), fpsCounter(Config::TARGET_FPS) {
 
 	if(!glfwInit()) {
 		std::cout << "Failed to initialize GLFW!" << std::endl;
@@ -299,7 +299,7 @@ void ApplicationWindow::DisplayInfoWidgets() {
 	ImGui::SetWindowPos(ImVec2(screenSize.x - 110, screenSize.y - 70));
 	ImGui::SetWindowSize(ImVec2(110, 70));
 
-	ImGui::Text("FPS: %.2f", fps);
+	ImGui::Text("FPS: %.2f", fpsCounter.GetFPS());
 	ImGui::Spacing(); ImGui::Spacing();
 	ImGui::Text("Time: %.2f", simulator->GetTime());
 	ImGui::Spacing(); ImGui::Spacing();
@@ -308,7 +308,7 @@ void ApplicationWindow::DisplayInfoWidgets() {
 }
 
 void ApplicationWindow::RunFrame() {
-	UpdateFPS();
+	fpsCounter.Update();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -326,17 +326,6 @@ void ApplicationWindow::RunFrame() {
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 };
-
-void ApplicationWindow::UpdateFPS() {
-	double currentTime = glfwGetTime();
-	frameCount++;
-
-	if(currentTime - lastFPSTime >= 1.0) {
-		fps = frameCount / (currentTime - lastFPSTime);
-		frameCount = 0;
-		lastFPSTime = currentTime;
-	}
-}
 
 void ApplicationWindow::PrintOpenGLInfo() {
 	const GLubyte* renderer = glGetString(GL_RENDERER);

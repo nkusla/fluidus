@@ -62,17 +62,6 @@ Interactive container manipulation
 Simulation Start/Stop/Resume
 ![03_example](./gifs/03_example.gif)
 
-## TO-DO
-
-- [ ] Method that sets parameters for different fluid types
-- [ ] Graphs in UI
-- [ ] Controls tutorial in UI
-- [x] Calculate MVP matrix before sending it to GPU
-- [x] Sphere creation in geometry shader for Fluid particles
-- [x] Implement better solver and fix instability
-- [ ] Space indexing for particles
-- [x] Use GL_QUADS (or something else) instead of GL_TRIANGLES for container rendering
-
 ## References
 
 - [Smoothed Particle Hydrodynamics Techniques for the Physics Based Simulation of Fluids and Solids](https://sph-tutorial.physics-simulation.org/pdf/SPH_Tutorial.pdf)
