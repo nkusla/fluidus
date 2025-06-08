@@ -1,5 +1,21 @@
 #include "../include/Config.hpp"
 
+
+void Config::InitDefaults() {
+	#ifdef RELEASE
+	Config::CONTAINER_DIMENSIONS = glm::vec3(5.5f, 3.5f, 1.0f);
+	Config::DEFAULT_CAMERA_POS = glm::vec3(0.0f, 1.0f, 6.0f);
+	Config::PARTICLE_COUNT = 1700;
+	Config::G = 2.65f;
+	Config::TIME_STEP = 0.015f;
+	Config::DAMPING = 0.3f;
+	Config::SMOOTHING_RADIUS = 0.40f;
+	Config::STIFFNESS = 8.5f;
+	Config::VISCOSITY = 9.5f;
+	Config::REST_DENSITY = 45.0f;
+	#endif
+}
+
 float Config::TARGET_FPS = 60.0f;
 unsigned int Config::SEED = 1616;
 glm::vec3 Config::CONTAINER_DIMENSIONS = glm::vec3(1.0f, 1.0f, 1.0f);

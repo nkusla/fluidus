@@ -53,6 +53,8 @@ ApplicationWindow::ApplicationWindow(glm::vec2 screenSize) : screenSize(screenSi
 	#ifdef DEBUG
 		PrintOpenGLInfo();
 	#endif
+
+	Config::InitDefaults();
 }
 
 void ApplicationWindow::InitImGui() {

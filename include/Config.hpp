@@ -11,7 +11,11 @@
 #define NO_POINT glm::vec3(INFINITY)
 
 class Config {
+	private:
+		Config() = default; // Prevent instantiation
 	public:
+		static void InitDefaults();
+
 		static float TARGET_FPS;
 		static unsigned int SEED;
 		static glm::vec3 CONTAINER_DIMENSIONS;
